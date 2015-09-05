@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">AlFalah</string>
+    <string name="app_name">AlFalah India</string>
 
-    <string name="coming_soon">Get ready, its coming on your mobile soon!!!</string>
+    <string name="become_member">Do you wish to be part of AlFalah India? Then become member today to help the poor and needy people</string>
+    <string name="register">Do you need help from us? Submit an application with your needs to us, we shall get back to you soon</string>
+    <string name="redirect">For more information on these, jump over to our website www.alfalahindia.org</string>
     <string name="action_settings">Settings</string>
+
+
 </resources>

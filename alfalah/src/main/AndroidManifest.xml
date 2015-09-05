@@ -18,4 +18,13 @@
         </activity>
     </application>
 
+    <!-- Permission: Writing to SDCard -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Network State Permissions -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Permission: Allow Connect to Internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
 </manifest>
