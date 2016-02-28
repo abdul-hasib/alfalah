@@ -2,7 +2,7 @@ package org.apps.alfalahindia;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +13,7 @@ import org.apps.alfalahindia.Util.Msg;
 import org.apps.alfalahindia.res.Forms;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     // Progress dialog type (0 - for Horizontal progress bar)
     public static final int progress_bar_type = 0;
