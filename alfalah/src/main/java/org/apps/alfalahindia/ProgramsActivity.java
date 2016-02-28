@@ -13,7 +13,7 @@ import org.apps.alfalahindia.Util.Msg;
 import org.apps.alfalahindia.res.Forms;
 
 
-public class MainActivity extends AppCompatActivity {
+public class ProgramsActivity extends AppCompatActivity {
 
     // Progress dialog type (0 - for Horizontal progress bar)
     public static final int progress_bar_type = 0;
@@ -25,11 +25,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        // Image view to show image after downloading
-        membershipFileImage = (ImageView) findViewById(R.id.membershipFileImage);
-        registrationFileImage = (ImageView) findViewById(R.id.registrationFileImage);
+        setContentView(R.layout.activity_programs);
     }
 
     @Override
@@ -54,20 +50,28 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void downloadRegistrationForm(View view) {
-        try {
-            FileDownloader.download(getApplicationContext(), Forms.Registration.URL,
-                    Forms.Registration.NAME, Forms.Registration.DESCRIPTION);
-        } catch (Exception e) {
-            Msg.showLong(getApplicationContext(), e.getLocalizedMessage());
+    public void downloadApplicationForm(View view) {
+
+        String url = null;
+        String name = null;
+        String description = null;
+
+        switch (view.getId()) {
+            case R.id.almadad:
+                url = Forms.AlMadad.URL;
+                name = Forms.AlMadad.NAME;
+                description = Forms.AlMadad.DESCRIPTION;
+                break;
+            case R.id.educare:
+                url = Forms.Educare.URL;
+                name = Forms.Educare.NAME;
+                description = Forms.Educare.DESCRIPTION;
+                break;
         }
-    }
 
-
-    public void downloadMembershipForm(View view) {
         try {
-            FileDownloader.download(getApplicationContext(), Forms.Membership.URL,
-                    Forms.Membership.NAME, Forms.Membership.DESCRIPTION);
+            FileDownloader.download(getApplicationContext(), url,
+                    name, description);
         } catch (Exception e) {
             Msg.showLong(getApplicationContext(), e.getLocalizedMessage());
         }
