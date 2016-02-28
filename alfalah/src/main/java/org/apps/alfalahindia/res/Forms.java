@@ -15,13 +15,13 @@ public class Forms {
     }
 
     public static class AlMadad {
-        public final static String URL = "http://www.alfalahindia.org/download/applications/AlFalah India AL-MADAD application.pdf";
+        public final static String URL = "http://www.alfalahindia.org/download/applications/AlFalah%20India%20AL-MADAD%20application.pdf";
         public final static String NAME = "AlFalah India AL-MADAD 2016.pdf";
         public final static String DESCRIPTION = "AlFalah India AL-MADAD 2016 Application Form";
     }
 
     public static class Educare {
-        public final static String URL = "http://www.alfalahindia.org/download/applications/AlFalah India EDUCARE application.pdf";
+        public final static String URL = "http://www.alfalahindia.org/download/applications/AlFalah%20India%20EDUCARE%20application.pdf";
         public final static String NAME = "AlFalah India EDUCARE 2016.pdf";
         public final static String DESCRIPTION = "AlFalah India EDUCARE 2016 Application Form";
     }

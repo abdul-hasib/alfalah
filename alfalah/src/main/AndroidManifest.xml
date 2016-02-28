@@ -2,6 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.apps.alfalahindia">
 
+    <!-- Permission: Writing to SDCard -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Network State Permissions -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Permission: Allow Connect to Internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,16 +25,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProgramsActivity" android:label="Programs" />
+        <activity
+            android:name=".ProgramsActivity"
+            android:label="Programs">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.apps.alfalahindia.ObjectivesActivity" />
+        </activity>
     </application>
-
-    <!-- Permission: Writing to SDCard -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <!-- Network State Permissions -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <!-- Permission: Allow Connect to Internet -->
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
