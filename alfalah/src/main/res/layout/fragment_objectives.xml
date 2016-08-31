@@ -36,33 +36,7 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/newsLayout"
         android:layout_below="@+id/textView"
         android:layout_marginTop="10pt" />
-
-    <LinearLayout
-        android:id="@+id/newsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10pt"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="AlFalah India has called applications for AL-MADAD and EDUCARE 2016 programs. Submit applications today to get the benefits" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Download Applications"
-            android:onClick="downloadApplications" />
-
-    </LinearLayout>
-
 
 </RelativeLayout>
