@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.adapters.ObjectivesAdapter;
@@ -63,8 +64,7 @@ public class ObjectivesFragment extends Fragment {
                 handler.post(pageSwitcher);
             }
         }, 500, 3000);
-        
+
         return view;
     }
-
 }
