@@ -3,6 +3,8 @@ package org.apps.alfalahindia.rest;
 
 import android.util.Log;
 
+import org.apache.http.HttpStatus;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,35 +25,36 @@ public class HttpManager {
         BufferedReader reader = null;
         String uri = requestPackage.getUri();
 
-        if (requestPackage.getMethod().equals("GET")) {
+        if (requestPackage.getMethod() == RequestMethod.GET) {
             uri += "?" + requestPackage.getEncodedParams();
         }
 
         try {
             URL url = new URL(getURI(uri));
-            System.out.println(url);
             Log.d("TAG", url.toString());
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod(requestPackage.getMethod());
 
-            Log.d("TAG", requestPackage.getMethod().toString());
+            httpURLConnection.setRequestMethod(requestPackage.getMethod().toString());
 
-            if(requestPackage.getMethod().equals("POST")) {
-                httpURLConnection.setDoOutput(true);
+            if (requestPackage.getMethod() == RequestMethod.POST) {
+                httpURLConnection.setDoOutput(false);
                 OutputStreamWriter writer = new OutputStreamWriter(httpURLConnection.getOutputStream());
                 writer.write(requestPackage.getEncodedParams());
                 writer.flush();
             }
 
-            StringBuilder sb = new StringBuilder();
-
-            reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+            int status = httpURLConnection.getResponseCode();
+            if (status >= HttpStatus.SC_BAD_REQUEST) {
+                reader = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
+            } else {
+                reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             }
 
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
             return sb.toString();
 
         } catch (Exception e) {
@@ -67,6 +70,10 @@ public class HttpManager {
                 }
             }
         }
+    }
+
+    public enum RequestMethod {
+        GET, POST
     }
 
 }

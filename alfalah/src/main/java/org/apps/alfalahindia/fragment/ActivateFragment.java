@@ -8,12 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.ConnectionDetector;
+import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.background.BackgroundTask;
+import org.apps.alfalahindia.interfaces.OnTaskCompleted;
 import org.apps.alfalahindia.rest.RequestPackage;
+import org.apps.alfalahindia.rest.RestResponse;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -99,13 +101,13 @@ public class ActivateFragment extends Fragment {
 
     private boolean validate() {
 
-        if(isEmpty(name) || isEmpty(email) || isEmpty(mobile) || isEmpty(username) || isEmpty(password) || isEmpty(confirmPassword)) {
-            Toast.makeText(getActivity(), "Please enter details", Toast.LENGTH_LONG).show();
+        if (isEmpty(name) || isEmpty(email) || isEmpty(mobile) || isEmpty(username) || isEmpty(password) || isEmpty(confirmPassword)) {
+            ToastUtil.toast(getActivity(), "Please enter details");
             return false;
         }
 
-        if (!password.getText().toString().equals(confirmPassword.getText())) {
-            Toast.makeText(getActivity(), "Passwords don't match", Toast.LENGTH_LONG).show();
+        if (!password.getText().toString().equals(confirmPassword.getText().toString())) {
+            ToastUtil.toast(getActivity(), "Passwords don't match");
             return false;
         }
 
@@ -114,24 +116,38 @@ public class ActivateFragment extends Fragment {
 
     private void activateMember() {
 
-        if (validate()) {
-            Toast.makeText(getActivity(), "hello call Rest api", Toast.LENGTH_SHORT).show();
-        }
-
-        if(ConnectionDetector.isOnline(getActivity())) {
+        if (validate() && ConnectionDetector.isOnline(getActivity())) {
             requestData("/member/role/");
         }
+
+
     }
 
     private void requestData(String uri) {
 
         RequestPackage requestPackage = new RequestPackage();
-        requestPackage.setMethod("POST");
         requestPackage.setUri(uri);
-        requestPackage.setParam("username", "abdulh");
+        requestPackage.setParam("username", username.getText().toString());
+        requestPackage.setParam("password", password.getText().toString());
+        requestPackage.setParam("email", email.getText().toString());
+        requestPackage.setParam("mobile", email.getText().toString());
 
-        BackgroundTask backgroundTask = new BackgroundTask(getActivity());
+        BackgroundTask backgroundTask = new BackgroundTask(getActivity(), new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(RestResponse result) {
+
+                if (result.getReturnCode() != 200) {
+                    ToastUtil.toast(getActivity(), result.getMessage());
+                } else {
+                    ToastUtil.toast(getActivity(), "Hello " + result.getData());
+                }
+
+
+            }
+        });
         backgroundTask.execute(requestPackage);
+
+        ToastUtil.toast(getActivity(), "hello");
     }
 
     // TODO: Rename method, update argument and hook method into UI event

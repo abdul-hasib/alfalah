@@ -9,7 +9,7 @@ import java.util.Map;
 public class RequestPackage {
 
     private String uri;
-    private String method = "POST";
+    private HttpManager.RequestMethod method = HttpManager.RequestMethod.POST;
     private Map<String, String> params = new HashMap<>();
 
     public String getUri() {
@@ -20,11 +20,11 @@ public class RequestPackage {
         this.uri = uri;
     }
 
-    public String getMethod() {
+    public HttpManager.RequestMethod getMethod() {
         return method;
     }
 
-    public void setMethod(String method) {
+    public void setMethod(HttpManager.RequestMethod method) {
         this.method = method;
     }
 

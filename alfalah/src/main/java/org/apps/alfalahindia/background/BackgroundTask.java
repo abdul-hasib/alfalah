@@ -1,66 +1,54 @@
 package org.apps.alfalahindia.background;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import org.apps.alfalahindia.R;
-import org.apps.alfalahindia.rest.ErrorModel;
+import com.google.gson.Gson;
+
+import org.apps.alfalahindia.Util.ProgressBarHandler;
+import org.apps.alfalahindia.interfaces.OnTaskCompleted;
 import org.apps.alfalahindia.rest.HttpManager;
-import org.apps.alfalahindia.rest.JsonParser;
 import org.apps.alfalahindia.rest.RequestPackage;
+import org.apps.alfalahindia.rest.RestResponse;
 
-import java.util.ArrayList;
-import java.util.List;
+public class BackgroundTask extends AsyncTask<RequestPackage, String, RestResponse> {
 
-public class BackgroundTask extends AsyncTask<RequestPackage, String, String> {
+    private ProgressBarHandler progressBarHandler;
 
-    ProgressDialog progressDialog;
-    Activity activity;
-    Context context;
+    private OnTaskCompleted listener;
 
-    List<BackgroundTask> tasks;
-    ErrorModel errorModel;
-
-    public BackgroundTask(Activity activity) {
-        this.activity = activity;
-        this.context = activity.getApplicationContext();
-        tasks = new ArrayList<>();
-        progressDialog = ProgressDialog.show(activity, context.getResources().getString(R.string.app_name), "Please wait");
+    public BackgroundTask(Activity activity, OnTaskCompleted listener) {
+        progressBarHandler = new ProgressBarHandler(activity);
+        this.listener = listener;
     }
 
     @Override
     protected void onPreExecute() {
-        if (tasks.size() == 0) {
-            progressDialog.hide();
-        }
-        tasks.add(this);
+        progressBarHandler.show();
     }
 
     @Override
-    protected String doInBackground(RequestPackage... params) {
+    protected RestResponse doInBackground(RequestPackage... params) {
         String content = HttpManager.getData(params[0]);
-        return content;
+        progressBarHandler.show();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return new Gson().fromJson(content, RestResponse.class);
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        Log.d("TAG", result);
-
-        errorModel = JsonParser.getError(result);
-
-        Log.d("TAG", errorModel.getData());
-
-        tasks.remove(this);
-        if (tasks.size() == 0) {
-            progressDialog.dismiss();
-        }
+    protected void onPostExecute(RestResponse result) {
+        progressBarHandler.hide();
+        listener.onTaskCompleted(result);
     }
 
     @Override
     protected void onProgressUpdate(String... values) {
-        Log.d("TAG", values[0]);
+        // nothing
     }
 }
