@@ -1,23 +1,17 @@
 package org.apps.alfalahindia.rest;
 
+import com.google.gson.Gson;
+
 public class RestResponse {
 
-    int returnCode;
+    String response;
 
-    String message;
-
-    String data;
-
-    public String getData() {
-        return data;
+    public String getResponse() {
+        return response;
     }
 
-    public int getReturnCode() {
-        return returnCode;
+    @Override
+    public String toString() {
+        return new Gson().toJson(this).toString();
     }
-
-    public String getMessage() {
-        return message;
-    }
-
 }

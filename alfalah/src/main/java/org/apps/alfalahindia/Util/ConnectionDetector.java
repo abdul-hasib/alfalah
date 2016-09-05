@@ -16,6 +16,9 @@ public class ConnectionDetector {
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
             return true;
         }
+
+        ToastUtil.toast(context, "There is not internet connection");
+
         return false;
     }
 }

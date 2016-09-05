@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="all">
         <item
             android:id="@+id/nav_objectives"
             android:icon="@drawable/ic_menu_camera"
@@ -14,23 +14,35 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Projects" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
     </group>
 
     <item android:title="Member Portal">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Contact" />
-            <item
-                android:id="@+id/nav_login"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Login" />
+            <group
+                android:id="@+id/first_section"
+                android:checkableBehavior="all">
+                <item
+                    android:id="@+id/nav_login"
+                    android:icon="@drawable/ic_menu_send"
+                    android:title="Login" />
+                <item
+                    android:id="@+id/nav_manage"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="Manage Account" />
+            </group>
+
         </menu>
     </item>
-
+    <item android:title="Admin Portal">
+        <menu>
+            <group
+                android:id="@+id/second_section"
+                android:checkableBehavior="all">
+                <item
+                    android:id="@+id/nav_members_list"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="Team ALIF" />
+            </group>
+        </menu>
+    </item>
 </menu>

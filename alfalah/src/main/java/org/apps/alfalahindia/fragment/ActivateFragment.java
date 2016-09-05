@@ -9,13 +9,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.ConnectionDetector;
 import org.apps.alfalahindia.Util.ToastUtil;
-import org.apps.alfalahindia.background.BackgroundTask;
-import org.apps.alfalahindia.interfaces.OnTaskCompleted;
-import org.apps.alfalahindia.rest.RequestPackage;
-import org.apps.alfalahindia.rest.RestResponse;
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +41,7 @@ public class ActivateFragment extends Fragment {
     EditText username;
     EditText password;
     EditText confirmPassword;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -116,38 +122,30 @@ public class ActivateFragment extends Fragment {
 
     private void activateMember() {
 
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+
         if (validate() && ConnectionDetector.isOnline(getActivity())) {
-            requestData("/member/role/");
+
         }
 
-
-    }
-
-    private void requestData(String uri) {
-
-        RequestPackage requestPackage = new RequestPackage();
-        requestPackage.setUri(uri);
-        requestPackage.setParam("username", username.getText().toString());
-        requestPackage.setParam("password", password.getText().toString());
-        requestPackage.setParam("email", email.getText().toString());
-        requestPackage.setParam("mobile", email.getText().toString());
-
-        BackgroundTask backgroundTask = new BackgroundTask(getActivity(), new OnTaskCompleted() {
-            @Override
-            public void onTaskCompleted(RestResponse result) {
-
-                if (result.getReturnCode() != 200) {
-                    ToastUtil.toast(getActivity(), result.getMessage());
-                } else {
-                    ToastUtil.toast(getActivity(), "Hello " + result.getData());
-                }
+        String uri = "/member/getall/";
 
 
-            }
-        });
-        backgroundTask.execute(requestPackage);
+        JsonRequest request = new JsonObjectRequest(Request.Method.POST, uri, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
 
-        ToastUtil.toast(getActivity(), "hello");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        requestQueue.add(request);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

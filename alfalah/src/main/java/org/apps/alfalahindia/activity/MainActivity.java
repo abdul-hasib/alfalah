@@ -17,11 +17,16 @@ import android.view.View;
 import android.widget.Toast;
 
 import org.apps.alfalahindia.R;
-import org.apps.alfalahindia.fragment.ActivateFragment;
+import org.apps.alfalahindia.Util.ToastUtil;
+import org.apps.alfalahindia.fragment.MembersListFragment;
 import org.apps.alfalahindia.fragment.ObjectivesFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    NavigationView navigationView;
+
+    private MenuItem activeMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +40,14 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "AlFalah India member? Active online account now!", Snackbar.LENGTH_LONG)
+                        .setAction("Activate",
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        ToastUtil.toast(getApplicationContext(), "Coming soon. Try after few days");
+                                    }
+                                }).show();
             }
         });
 
@@ -46,7 +57,7 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         setFirstItemNavigationView(navigationView);
     }
@@ -64,6 +75,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+
     }
 
     @Override
@@ -103,22 +115,27 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_manage:
                 break;
-            case R.id.nav_login:
-                fragment = new ActivateFragment();
+            case R.id.nav_members_list:
+                fragment = new MembersListFragment();
                 break;
             case R.id.nav_objectives:
-            default:
                 fragment = new ObjectivesFragment();
+                break;
+            default:
                 break;
         }
 
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-        }
+            String backStateName = fragment.getClass().getName();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(backStateName).commit();
 
-        // Highlight the selected item has been done by NavigationView
-        item.setChecked(true);
+            if (activeMenuItem != null) {
+                activeMenuItem.setChecked(false);
+            }
+            activeMenuItem = item;
+            item.setChecked(true);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -1,8 +1,6 @@
 package org.apps.alfalahindia.rest;
 
 
-import android.util.Log;
-
 import org.apache.http.HttpStatus;
 
 import java.io.BufferedReader;
@@ -31,7 +29,7 @@ public class HttpManager {
 
         try {
             URL url = new URL(getURI(uri));
-            Log.d("TAG", url.toString());
+
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
             httpURLConnection.setRequestMethod(requestPackage.getMethod().toString());
