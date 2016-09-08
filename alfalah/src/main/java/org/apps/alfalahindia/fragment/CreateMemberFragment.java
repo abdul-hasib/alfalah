@@ -54,13 +54,13 @@ public class CreateMemberFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_create_member, container, false);
+        View view = inflater.inflate(R.layout.fragment_member_create, container, false);
 
-        name = (EditText) view.findViewById(R.id.memberName);
-        email = (EditText) view.findViewById(R.id.memberEmail);
-        mobile = (EditText) view.findViewById(R.id.memberMobile);
-        username = (EditText) view.findViewById(R.id.memberUsername);
-        role = (Switch) view.findViewById(R.id.memberRole);
+        name = (EditText) view.findViewById(R.id.input_name);
+        email = (EditText) view.findViewById(R.id.input_email);
+        mobile = (EditText) view.findViewById(R.id.input_mobile);
+        username = (EditText) view.findViewById(R.id.input_username);
+        role = (Switch) view.findViewById(R.id.input_role);
 
         return view;
     }

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.ToastUtil;
+import org.apps.alfalahindia.fragment.ActivateFragment;
 import org.apps.alfalahindia.fragment.MembersListFragment;
 import org.apps.alfalahindia.fragment.ObjectivesFragment;
 
@@ -114,6 +115,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_slideshow:
                 break;
             case R.id.nav_manage:
+                break;
+            case R.id.nav_login:
+                fragment = new ActivateFragment();
                 break;
             case R.id.nav_members_list:
                 fragment = new MembersListFragment();
