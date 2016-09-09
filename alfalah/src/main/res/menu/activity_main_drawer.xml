@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="all">
+    <group
+        android:id="@+id/group_public"
+        android:checkableBehavior="all">
         <item
             android:id="@+id/nav_objectives"
             android:icon="@drawable/ic_menu_camera"
@@ -16,33 +18,26 @@
             android:title="Projects" />
     </group>
 
-    <item android:title="Member Portal">
-        <menu>
-            <group
-                android:id="@+id/first_section"
-                android:checkableBehavior="all">
-                <item
-                    android:id="@+id/nav_login"
-                    android:icon="@drawable/ic_menu_send"
-                    android:title="Login" />
-                <item
-                    android:id="@+id/nav_manage"
-                    android:icon="@drawable/ic_menu_manage"
-                    android:title="Manage Account" />
-            </group>
+    <group
+        android:id="@+id/group_member"
+        android:checkableBehavior="all">
 
-        </menu>
-    </item>
-    <item android:title="Admin Portal">
-        <menu>
-            <group
-                android:id="@+id/second_section"
-                android:checkableBehavior="all">
-                <item
-                    android:id="@+id/nav_members_list"
-                    android:icon="@drawable/ic_menu_share"
-                    android:title="Team ALIF" />
-            </group>
-        </menu>
-    </item>
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Manage Account" />
+    </group>
+
+    <group
+        android:id="@+id/group_admin"
+        android:checkableBehavior="all">
+        <item
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Settings" />
+        <item
+            android:id="@+id/nav_members_list"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Team ALIF" />
+    </group>
 </menu>
+

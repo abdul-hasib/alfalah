@@ -5,5 +5,5 @@
         android:id="@+id/menu_save_member"
         android:icon="@android:drawable/ic_menu_save"
         android:title="Save"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom" />
 </menu>

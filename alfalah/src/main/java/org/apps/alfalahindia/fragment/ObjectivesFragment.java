@@ -3,12 +3,10 @@ package org.apps.alfalahindia.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.adapters.ObjectivesAdapter;
@@ -16,16 +14,12 @@ import org.apps.alfalahindia.adapters.ObjectivesAdapter;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ObjectivesFragment extends Fragment {
+public class ObjectivesFragment extends BaseFragment {
 
     int currentPage = 1;
     int numberOfPages = 1;
     ViewPager features;
     Timer swipeTimer = new Timer();
-
-    public ObjectivesFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

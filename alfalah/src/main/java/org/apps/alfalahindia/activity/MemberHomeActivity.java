@@ -1,31 +1,21 @@
 package org.apps.alfalahindia.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import org.apps.alfalahindia.R;
-import org.apps.alfalahindia.Util.ToastUtil;
-import org.apps.alfalahindia.fragment.ActivateFragment;
+import org.apps.alfalahindia.enums.UserRole;
 import org.apps.alfalahindia.fragment.MembersListFragment;
 import org.apps.alfalahindia.fragment.ObjectivesFragment;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
-    NavigationView navigationView;
+public class MemberHomeActivity extends BaseActivity {
 
     private MenuItem activeMenuItem;
 
@@ -33,33 +23,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "AlFalah India member? Active online account now!", Snackbar.LENGTH_LONG)
-                        .setAction("Activate",
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        ToastUtil.toast(getApplicationContext(), "Coming soon. Try after few days");
-                                    }
-                                }).show();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
         setFirstItemNavigationView(navigationView);
     }
 
@@ -80,6 +43,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected UserRole getUserRole() {
+        return UserRole.MEMBER;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -88,9 +56,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -115,9 +80,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_slideshow:
                 break;
             case R.id.nav_manage:
-                break;
-            case R.id.nav_login:
-                fragment = new ActivateFragment();
                 break;
             case R.id.nav_members_list:
                 fragment = new MembersListFragment();

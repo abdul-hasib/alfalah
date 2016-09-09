@@ -3,7 +3,6 @@ package org.apps.alfalahindia.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.apps.alfalahindia.R;
+import org.apps.alfalahindia.Util.ConnectionDetector;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.pojo.Member;
@@ -34,12 +34,12 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreateMemberFragment extends Fragment {
+public class MemberCreateFragment extends BaseFragment {
 
-    EditText name;
-    EditText email;
-    EditText mobile;
-    EditText username;
+    EditText nameText;
+    EditText emailText;
+    EditText mobileText;
+    EditText usernameText;
     Switch role;
 
     ProgressBarHandler progressBarHandler = null;
@@ -56,10 +56,10 @@ public class CreateMemberFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_member_create, container, false);
 
-        name = (EditText) view.findViewById(R.id.input_name);
-        email = (EditText) view.findViewById(R.id.input_email);
-        mobile = (EditText) view.findViewById(R.id.input_mobile);
-        username = (EditText) view.findViewById(R.id.input_username);
+        nameText = (EditText) view.findViewById(R.id.input_name);
+        emailText = (EditText) view.findViewById(R.id.input_email);
+        mobileText = (EditText) view.findViewById(R.id.input_mobile);
+        usernameText = (EditText) view.findViewById(R.id.input_username);
         role = (Switch) view.findViewById(R.id.input_role);
 
         return view;
@@ -72,14 +72,14 @@ public class CreateMemberFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_member_create, menu);
+        inflater.inflate(R.menu.menu_member_save, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_save_member:
-                if (validateParameters()) {
+                if (validateParameters() && ConnectionDetector.isOnline(getActivity())) {
                     createMember();
                 }
                 return true;
@@ -90,16 +90,42 @@ public class CreateMemberFragment extends Fragment {
 
     private boolean validateParameters() {
 
-        if (name.getText().toString().isEmpty()
-                || email.getText().toString().isEmpty()
-                || mobile.getText().toString().isEmpty()
-                || username.getText().toString().isEmpty()) {
+        boolean valid = true;
 
-            ToastUtil.toast(getActivity(), "Please enter details");
-            return false;
+        String name = nameText.getText().toString();
+        String email = emailText.getText().toString();
+        String mobile = mobileText.getText().toString();
+        String username = usernameText.getText().toString();
+
+        if (name.isEmpty()) {
+            nameText.setError("Name can not be blank");
+            valid = false;
+        } else {
+            nameText.setError(null);
         }
 
-        return true;
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailText.setError("Email is not valid");
+            valid = false;
+        } else {
+            nameText.setError(null);
+        }
+
+        if (mobile.isEmpty() || mobile.length() < 10 || mobile.length() > 10) {
+            mobileText.setError("Mobile number is not valid (enter without country code");
+            valid = false;
+        } else {
+            mobileText.setError(null);
+        }
+
+        if (username.isEmpty()) {
+            usernameText.setError("ALIF Id can not be blank");
+            valid = false;
+        } else {
+            usernameText.setError(null);
+        }
+
+        return valid;
     }
 
     private void createMember() {
@@ -132,10 +158,10 @@ public class CreateMemberFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 System.out.println("Calling get params");
                 Member member = new Member();
-                member.setName(name.getText().toString());
-                member.setEmail(email.getText().toString());
-                member.setMobile(mobile.getText().toString());
-                member.setId(username.getText().toString());
+                member.setName(nameText.getText().toString());
+                member.setEmail(emailText.getText().toString());
+                member.setMobile(mobileText.getText().toString());
+                member.setId(usernameText.getText().toString());
 
                 if (role.isChecked()) {
                     member.setRole(Member.Role.ADMIN);

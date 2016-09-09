@@ -23,7 +23,6 @@ public class MemberListAdapter extends BaseAdapter {
 
     public MemberListAdapter(Context context, List<Member> memberList,
                              onSelectedEventCalender m_onSelectedEventCalender) {
-
         super();
         this.context = context;
         this.memberList = memberList;
@@ -63,7 +62,6 @@ public class MemberListAdapter extends BaseAdapter {
         return convertView;
     }
 
-
     public interface onSelectedEventCalender {
         void onSelectedEventCalender(Member member, int type);
 
@@ -72,8 +70,6 @@ public class MemberListAdapter extends BaseAdapter {
     public static class ViewHolder {
         TextView textView;
         ImageView photo;
-        // Bitmap photo;
-        // Bitmap textView_Contact_Number;
     }
 
 }

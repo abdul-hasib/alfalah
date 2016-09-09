@@ -1,6 +1,7 @@
 package org.apps.alfalahindia.Util;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 public class ToastUtil {
@@ -9,11 +10,14 @@ public class ToastUtil {
 
     public static void toast(Context ctx, Object message) {
 
-        if(toast != null) {
+        if (message == null) return;
+
+        if (toast != null) {
             toast.cancel();
         }
         toast = Toast.makeText(ctx, message.toString(), Toast.LENGTH_SHORT);
         toast.show();
+        Log.d("ALIF", message.toString());
     }
 
 }

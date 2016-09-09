@@ -4,8 +4,10 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 
 import org.apps.alfalahindia.rest.RequestMethod;
+import org.apps.alfalahindia.rest.RestResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,7 +20,8 @@ public class ALIFStringRequest extends StringRequest {
     @Override
     protected VolleyError parseNetworkError(VolleyError volleyError) {
         if (volleyError.networkResponse != null && volleyError.networkResponse.data != null) {
-            volleyError = new VolleyError(new String(volleyError.networkResponse.data));
+            String error = new String(volleyError.networkResponse.data);
+            volleyError = new VolleyError(new Gson().fromJson(error, RestResponse.class).getResponse());
         }
         return volleyError;
     }
