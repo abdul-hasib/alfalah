@@ -1,5 +1,6 @@
 package org.apps.alfalahindia.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,17 +17,24 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import org.apps.alfalahindia.R;
+import org.apps.alfalahindia.Util.IntentKeys;
+import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
+import org.apps.alfalahindia.rest.JsonParser;
 import org.apps.alfalahindia.rest.RequestMethod;
 import org.apps.alfalahindia.rest.RestHelper;
+import org.apps.alfalahindia.rest.RestResponse;
 import org.apps.alfalahindia.volley.ALIFStringRequest;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
+
     private static final String TAG = "SignupActivity";
+
+    Prefs prefs;
 
     EditText _usernameText;
     EditText _nameText;
@@ -52,6 +60,8 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         init();
+
+        prefs = new Prefs(getBaseContext());
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,10 +97,10 @@ public class SignupActivity extends AppCompatActivity {
         ALIFStringRequest request = new ALIFStringRequest(RequestMethod.POST, uri,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response) {
-                        ToastUtil.toast(getApplicationContext(), response);
+                    public void onResponse(String output) {
+                        RestResponse response = JsonParser.fromJson(output, RestResponse.class);
                         progressBarHandler.hide();
-                        _signupButton.setEnabled(true);
+                        onSignupSuccess(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -98,7 +108,7 @@ public class SignupActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         ToastUtil.toast(getBaseContext(), error.getMessage());
                         progressBarHandler.hide();
-                        _signupButton.setEnabled(true);
+                        onSignupFailed();
                     }
                 }
         ) {
@@ -124,9 +134,12 @@ public class SignupActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    public void onSignupSuccess() {
+    public void onSignupSuccess(RestResponse response) {
         _signupButton.setEnabled(true);
-        setResult(RESULT_OK, null);
+        ToastUtil.toast(getBaseContext(), response.getMessage());
+        Intent intent = new Intent(this, MemberHomeActivity.class);
+        intent.putExtra(IntentKeys.MEMBER_OBJECT, response.getMember().toString());
+        setResult(RESULT_OK, intent);
         finish();
     }
 

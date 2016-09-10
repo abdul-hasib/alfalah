@@ -4,10 +4,16 @@ import com.google.gson.Gson;
 
 public class RestResponse {
 
-    String response;
+    String message;
 
-    public String getResponse() {
-        return response;
+    Member member;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Member getMember() {
+        return member;
     }
 
     @Override

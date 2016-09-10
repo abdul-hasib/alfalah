@@ -148,7 +148,7 @@ public class MemberCreateFragment extends BaseFragment {
                     public void onErrorResponse(VolleyError error) {
                         if (error != null) {
                             RestResponse restResponse = new Gson().fromJson(error.getMessage(), RestResponse.class);
-                            ToastUtil.toast(getActivity().getApplicationContext(), restResponse.getResponse());
+                            ToastUtil.toast(getActivity().getApplicationContext(), restResponse.getMessage());
                         }
                         progressBarHandler.hide();
                     }

@@ -17,10 +17,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import org.apps.alfalahindia.R;
+import org.apps.alfalahindia.Util.IntentKeys;
+import org.apps.alfalahindia.Util.PrefKeys;
+import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
+import org.apps.alfalahindia.enums.UserRole;
+import org.apps.alfalahindia.pojo.Member;
+import org.apps.alfalahindia.rest.JsonParser;
 import org.apps.alfalahindia.rest.RequestMethod;
 import org.apps.alfalahindia.rest.RestHelper;
+import org.apps.alfalahindia.rest.RestResponse;
 import org.apps.alfalahindia.volley.ALIFStringRequest;
 
 import java.util.HashMap;
@@ -30,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
+
+    Prefs prefs;
     EditText _usernameText;
     EditText _passwordText;
     Button _loginButton;
@@ -40,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        prefs = new Prefs(getBaseContext());
 
         _loginButton = (Button) findViewById(R.id.btn_login);
         _usernameText = (EditText) findViewById(R.id.input_username);
@@ -68,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         _skipLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                prefs.setString(PrefKeys.USER_USER_ROLE, UserRole.GUEST.toString());
                 Intent intent = new Intent(getApplicationContext(), GuestHomeActivity.class);
                 startActivity(intent);
                 finish();
@@ -98,6 +110,9 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         ToastUtil.toast(getApplicationContext(), response);
                         progressBarHandler.hide();
+                        Intent intent = new Intent(getBaseContext(), MemberHomeActivity.class);
+                        intent.putExtra(IntentKeys.MEMBER_OBJECT, JsonParser.fromJson(response, RestResponse.class).getMember().toString());
+                        onLoginSuccess(intent);
                     }
                 },
                 new Response.ErrorListener() {
@@ -105,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         ToastUtil.toast(getApplicationContext(), error.getMessage());
                         progressBarHandler.hide();
+                        onLoginFailed();
                     }
                 }
         ) {
@@ -125,17 +141,21 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
-
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                this.finish();
+                onLoginSuccess(data);
             }
         }
     }
 
-    public void onLoginSuccess() {
-        _loginButton.setEnabled(true);
-        finish();
+    public void onLoginSuccess(Intent intent) {
+
+        // save member details in shared pref
+        String s = intent.getExtras().getString(IntentKeys.MEMBER_OBJECT);
+        Member member = JsonParser.fromJson(s, Member.class);
+        Log.d(TAG, member.toString());
+        prefs.setString(PrefKeys.USER_USER_ROLE, member.getRole().toString());
+
+        startActivity(intent);
+        this.finish();
     }
 
     public void onLoginFailed() {
@@ -146,11 +166,11 @@ public class LoginActivity extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
-        String email = _usernameText.getText().toString();
+        String username = _usernameText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _usernameText.setError("enter a valid email address");
+        if (username.isEmpty()) {
+            _usernameText.setError("enter a valid username address");
             valid = false;
         } else {
             _usernameText.setError(null);

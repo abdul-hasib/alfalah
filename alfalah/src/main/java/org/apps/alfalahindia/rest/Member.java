@@ -16,6 +16,16 @@ public class Member {
 
     String memberType;
 
+    String autoToken;
+
+    public String getAutoToken() {
+        return autoToken;
+    }
+
+    public void setAutoToken(String autoToken) {
+        this.autoToken = autoToken;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -71,4 +81,10 @@ public class Member {
     public void setMemberType(String memberType) {
         this.memberType = memberType;
     }
+
+    @Override
+    public String toString() {
+        return JsonParser.toJson(this);
+    }
+
 }

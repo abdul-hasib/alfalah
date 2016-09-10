@@ -2,6 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group
+        android:id="@+id/group_member"
+        android:checkableBehavior="all">
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@android:drawable/ic_dialog_dialer"
+            android:title="Dashboard" />
+    </group>
+
+    <group
         android:id="@+id/group_public"
         android:checkableBehavior="all">
         <item
@@ -16,16 +25,6 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Projects" />
-    </group>
-
-    <group
-        android:id="@+id/group_member"
-        android:checkableBehavior="all">
-
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Manage Account" />
     </group>
 
     <group

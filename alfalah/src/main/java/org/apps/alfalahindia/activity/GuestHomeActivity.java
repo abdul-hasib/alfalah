@@ -40,8 +40,6 @@ public class GuestHomeActivity extends BaseActivity {
                 break;
             case R.id.nav_slideshow:
                 break;
-            case R.id.nav_manage:
-                break;
             case R.id.nav_members_list:
                 fragment = new MembersListFragment();
                 break;

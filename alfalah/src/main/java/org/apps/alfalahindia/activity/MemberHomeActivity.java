@@ -11,7 +11,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import org.apps.alfalahindia.R;
+import org.apps.alfalahindia.Util.IntentKeys;
 import org.apps.alfalahindia.enums.UserRole;
+import org.apps.alfalahindia.fragment.BaseFragment;
+import org.apps.alfalahindia.fragment.DashboardFragment;
 import org.apps.alfalahindia.fragment.MembersListFragment;
 import org.apps.alfalahindia.fragment.ObjectivesFragment;
 
@@ -22,13 +25,14 @@ public class MemberHomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setFirstItemNavigationView(navigationView);
     }
 
     private void setFirstItemNavigationView(NavigationView navigationView) {
         navigationView.getMenu().getItem(0).setChecked(true);
-        navigationView.getMenu().performIdentifierAction(R.id.nav_objectives, 0);
+        navigationView.getMenu().performIdentifierAction(R.id.nav_dashboard, 0);
+        BaseFragment baseFragment = DashboardFragment.newInstance(getIntent().getExtras().getString(IntentKeys.MEMBER_OBJECT));
+        fragmentManager.replaceFragment(R.id.content_frame, baseFragment);
     }
 
     @Override
@@ -79,7 +83,7 @@ public class MemberHomeActivity extends BaseActivity {
                 break;
             case R.id.nav_slideshow:
                 break;
-            case R.id.nav_manage:
+            case R.id.nav_dashboard:
                 break;
             case R.id.nav_members_list:
                 fragment = new MembersListFragment();

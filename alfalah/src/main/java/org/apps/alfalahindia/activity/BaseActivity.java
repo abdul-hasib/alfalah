@@ -91,11 +91,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     }
 
     protected UserRole getUserRole() {
-        if (prefs.getBoolean(PrefKeys.USER_ACCOUNT_ACTIVATED)) {
-            return UserRole.MEMBER;
-        } else {
-            return UserRole.GUEST;
-        }
+        return UserRole.valueOf(prefs.getString(PrefKeys.USER_USER_ROLE));
     }
 
     private void prepareHomePage(UserRole userRole) {
