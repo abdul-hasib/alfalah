@@ -14,7 +14,6 @@ import android.widget.Toast;
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.IntentKeys;
 import org.apps.alfalahindia.Util.PrefKeys;
-import org.apps.alfalahindia.fragment.BaseFragment;
 import org.apps.alfalahindia.fragment.DashboardFragment;
 import org.apps.alfalahindia.fragment.MembersListFragment;
 import org.apps.alfalahindia.fragment.ObjectivesFragment;
@@ -34,12 +33,8 @@ public class MemberHomeActivity extends BaseActivity {
 
     private void setFirstItemNavigationView(NavigationView navigationView) {
         navigationView.getMenu().getItem(0).setChecked(true);
-        navigationView.getMenu().performIdentifierAction(R.id.nav_dashboard, 0);
-
         memberDetails = getIntent().getExtras().getString(IntentKeys.MEMBER_OBJECT);
-        BaseFragment baseFragment = DashboardFragment.newInstance(memberDetails);
-        fragmentManager.replaceFragment(R.id.content_frame, baseFragment);
-
+        fragmentManager.addFragment(R.id.content_frame, DashboardFragment.newInstance(memberDetails));
         Log.d(TAG, prefs.getString(PrefKeys.USER_USER_ROLE));
     }
 

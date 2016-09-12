@@ -7,9 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import org.apps.alfalahindia.fragment.BaseFragment;
 
-/**
- * Created by abdulh on 9/9/2016.
- */
 public class ALIFFragmentManager {
 
     FragmentManager fm;
