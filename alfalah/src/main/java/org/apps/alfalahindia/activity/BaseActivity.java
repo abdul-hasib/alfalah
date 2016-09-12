@@ -6,6 +6,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     protected MenuItem activeMenuItem;
     ALIFFragmentManager fragmentManager;
     Prefs prefs;
+    private String TAG = BaseActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     }
 
     protected UserRole getUserRole() {
+        Log.d(TAG, prefs.getString(PrefKeys.USER_USER_ROLE));
         return UserRole.valueOf(prefs.getString(PrefKeys.USER_USER_ROLE));
     }
 
@@ -98,9 +101,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
         navigationView.getMenu().setGroupVisible(R.id.group_member, false);
         navigationView.getMenu().setGroupVisible(R.id.group_admin, false);
-
+        Log.d(TAG, userRole.toString());
         switch (userRole) {
-            case ADMIN:
+            case SUPER_ADMIN:
                 navigationView.getMenu().setGroupVisible(R.id.group_member, true);
                 navigationView.getMenu().setGroupVisible(R.id.group_admin, true);
                 break;

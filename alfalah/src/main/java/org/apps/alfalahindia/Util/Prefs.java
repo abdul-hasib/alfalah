@@ -5,42 +5,41 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class Prefs {
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor prefsEditor;
+    SharedPreferences preferences;
 
     Prefs prefs = null;
     Context context;
 
     public Prefs(Context context) {
-        sharedPreferences = context.getSharedPreferences("USER_PREFS", Activity.MODE_PRIVATE);
-        prefsEditor = sharedPreferences.edit();
+        preferences = context.getSharedPreferences("ALIF_PREFS", Activity.MODE_PRIVATE);
     }
 
     public String getString(String key) {
-        return sharedPreferences.getString(key, null);
+        return preferences.getString(key, null);
     }
 
     public boolean getBoolean(String key) {
-        return sharedPreferences.getBoolean(key, false);
+        return preferences.getBoolean(key, false);
     }
 
     public int getInt(String key) {
-        return sharedPreferences.getInt(key, 0);
+        return preferences.getInt(key, 0);
     }
 
     public void setString(String key, String value) {
-        prefsEditor.putString(key, value);
-        prefsEditor.commit();
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key, value);
+        editor.apply();
     }
 
     public void setBoolean(String key, boolean value) {
-        prefsEditor.putBoolean(key, false);
-        prefsEditor.commit();
+        preferences.edit().putBoolean(key, false);
+        preferences.edit().apply();
     }
 
     public void setInt(String key, int value) {
-        prefsEditor.putInt(key, value);
-        prefsEditor.commit();
+        preferences.edit().putInt(key, value);
+        preferences.edit().apply();
     }
 
 }

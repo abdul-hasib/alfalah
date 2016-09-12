@@ -5,14 +5,13 @@
     <string name="almadad">Applications have been called for AL-MADAD 2016. Submit applications on or before May 08 2016</string>
     <string name="redirect">For more information on these, jump over to our website www.alfalahindia.org</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_main">AlFalah India</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">AlFalah India</string>
 
 
 </resources>

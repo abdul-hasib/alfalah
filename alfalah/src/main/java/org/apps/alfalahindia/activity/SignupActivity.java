@@ -21,10 +21,10 @@ import org.apps.alfalahindia.Util.IntentKeys;
 import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
+import org.apps.alfalahindia.rest.ALIFResponse;
 import org.apps.alfalahindia.rest.JsonParser;
 import org.apps.alfalahindia.rest.RequestMethod;
-import org.apps.alfalahindia.rest.RestHelper;
-import org.apps.alfalahindia.rest.RestResponse;
+import org.apps.alfalahindia.rest.RestURI;
 import org.apps.alfalahindia.volley.ALIFStringRequest;
 
 import java.util.HashMap;
@@ -61,7 +61,7 @@ public class SignupActivity extends AppCompatActivity {
 
         init();
 
-        prefs = new Prefs(getBaseContext());
+        prefs = new Prefs(getApplicationContext());
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +89,7 @@ public class SignupActivity extends AppCompatActivity {
 
         _signupButton.setEnabled(false);
 
-        String uri = RestHelper.getUri("/member/activate/");
+        String uri = RestURI.getUri("/member/activate/");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         final ProgressBarHandler progressBarHandler = new ProgressBarHandler(this);
         progressBarHandler.show();
@@ -98,7 +98,7 @@ public class SignupActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String output) {
-                        RestResponse response = JsonParser.fromJson(output, RestResponse.class);
+                        ALIFResponse response = JsonParser.fromJson(output, ALIFResponse.class);
                         progressBarHandler.hide();
                         onSignupSuccess(response);
                     }
@@ -106,7 +106,7 @@ public class SignupActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        ToastUtil.toast(getBaseContext(), error.getMessage());
+                        ToastUtil.toast(getApplicationContext(), error.getMessage());
                         progressBarHandler.hide();
                         onSignupFailed();
                     }
@@ -134,17 +134,17 @@ public class SignupActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    public void onSignupSuccess(RestResponse response) {
+    public void onSignupSuccess(ALIFResponse response) {
         _signupButton.setEnabled(true);
-        ToastUtil.toast(getBaseContext(), response.getMessage());
+        ToastUtil.toast(getApplicationContext(), response.getMessage());
         Intent intent = new Intent(this, MemberHomeActivity.class);
-        intent.putExtra(IntentKeys.MEMBER_OBJECT, response.getMember().toString());
+        intent.putExtra(IntentKeys.MEMBER_OBJECT, response.getData());
         setResult(RESULT_OK, intent);
         finish();
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Signup failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Signup failed", Toast.LENGTH_LONG).show();
         _signupButton.setEnabled(true);
     }
 

@@ -1,4 +1,9 @@
-package org.apps.alfalahindia.rest;
+package org.apps.alfalahindia.pojo;
+
+import android.graphics.Bitmap;
+
+import org.apps.alfalahindia.enums.UserRole;
+import org.apps.alfalahindia.rest.JsonParser;
 
 public class Member {
 
@@ -8,7 +13,7 @@ public class Member {
 
     String name;
 
-    String role;
+    UserRole role;
 
     String email;
 
@@ -16,14 +21,24 @@ public class Member {
 
     String memberType;
 
-    String autoToken;
+    String authCode;
 
-    public String getAutoToken() {
-        return autoToken;
+    Bitmap photo;
+
+    public Bitmap getPhoto() {
+        return photo;
     }
 
-    public void setAutoToken(String autoToken) {
-        this.autoToken = autoToken;
+    public void setPhoto(Bitmap photo) {
+        this.photo = photo;
+    }
+
+    public String getAuthCode() {
+        return authCode;
+    }
+
+    public void setAuthCode(String authCode) {
+        this.authCode = authCode;
     }
 
     public String getUsername() {
@@ -50,11 +65,11 @@ public class Member {
         this.name = name;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 

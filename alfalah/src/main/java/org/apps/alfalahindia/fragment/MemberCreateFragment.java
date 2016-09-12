@@ -24,14 +24,14 @@ import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.ConnectionDetector;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
+import org.apps.alfalahindia.enums.UserRole;
 import org.apps.alfalahindia.pojo.Member;
+import org.apps.alfalahindia.rest.ALIFResponse;
 import org.apps.alfalahindia.rest.RequestMethod;
-import org.apps.alfalahindia.rest.RestHelper;
-import org.apps.alfalahindia.rest.RestResponse;
+import org.apps.alfalahindia.rest.RestURI;
 import org.apps.alfalahindia.volley.ALIFStringRequest;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.Map;
 
 public class MemberCreateFragment extends BaseFragment {
@@ -131,7 +131,7 @@ public class MemberCreateFragment extends BaseFragment {
     private void createMember() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         progressBarHandler = new ProgressBarHandler(this.getActivity());
-        String uri = RestHelper.getUri("/member/create/");
+        String uri = RestURI.getUri("/member/create/");
 
         progressBarHandler.show();
         ALIFStringRequest request = new ALIFStringRequest(RequestMethod.POST, uri,
@@ -147,8 +147,8 @@ public class MemberCreateFragment extends BaseFragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         if (error != null) {
-                            RestResponse restResponse = new Gson().fromJson(error.getMessage(), RestResponse.class);
-                            ToastUtil.toast(getActivity().getApplicationContext(), restResponse.getMessage());
+                            ALIFResponse ALIFResponse = new Gson().fromJson(error.getMessage(), ALIFResponse.class);
+                            ToastUtil.toast(getActivity().getApplicationContext(), ALIFResponse.getMessage());
                         }
                         progressBarHandler.hide();
                     }
@@ -161,15 +161,14 @@ public class MemberCreateFragment extends BaseFragment {
                 member.setName(nameText.getText().toString());
                 member.setEmail(emailText.getText().toString());
                 member.setMobile(mobileText.getText().toString());
-                member.setId(usernameText.getText().toString());
+                member.setUsername(usernameText.getText().toString());
 
                 if (role.isChecked()) {
-                    member.setRole(Member.Role.ADMIN);
+                    member.setRole(UserRole.ADMIN);
                 } else {
-                    member.setRole(Member.Role.MEMBER);
+                    member.setRole(UserRole.GUEST);
                 }
 
-                Map<String, String> params = new HashMap<String, String>();
                 Type type = new TypeToken<Map<String, String>>() {
                 }.getType();
 

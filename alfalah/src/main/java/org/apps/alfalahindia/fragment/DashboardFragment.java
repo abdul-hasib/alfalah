@@ -3,9 +3,11 @@ package org.apps.alfalahindia.fragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.apps.alfalahindia.R;
@@ -26,6 +28,8 @@ public class DashboardFragment extends BaseFragment {
     TextView nameText;
     TextView usernameText;
     TextView roleText;
+    TextView emailText;
+    TextView mobileText;
 
     private String memberDetails;
 
@@ -65,17 +69,44 @@ public class DashboardFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        nameText = (TextView) view.findViewById(R.id.name_text);
-        usernameText = (TextView) view.findViewById(R.id.username_text);
-        roleText = (TextView) view.findViewById(R.id.role_text);
-
         Member member = JsonParser.fromJson(memberDetails, Member.class);
 
-        nameText.setText(member.getName());
-        usernameText.setText(member.getUsername());
-        roleText.setText(member.getRole().toString());
+        LinearLayout dashboardLayout = (LinearLayout) view.findViewById(R.id.dashBoardLayout);
+
+        dashboardLayout.addView(displayMemberDetails("Member Name", member.getName()));
+        dashboardLayout.addView(displayMemberDetails("ALIF Member ID", member.getUsername()));
+        dashboardLayout.addView(displayMemberDetails("User Role", member.getRole().toString()));
+        dashboardLayout.addView(displayMemberDetails("Email", member.getEmail()));
+        dashboardLayout.addView(displayMemberDetails("Mobile", member.getMobile()));
 
         return view;
+    }
+
+    private LinearLayout displayMemberDetails(String key, String value) {
+        LinearLayout nameValueLayout = new LinearLayout(getActivity());
+        nameValueLayout.setOrientation(LinearLayout.HORIZONTAL);
+        nameValueLayout.setWeightSum(2);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.weight = 1;
+
+        TextView keyText = new TextView(getActivity());
+        keyText.setPadding(0, 10, 20, 10);
+        keyText.setLayoutParams(layoutParams);
+        keyText.setGravity(Gravity.RIGHT);
+
+        TextView valueText = new TextView(getActivity());
+        valueText.setPadding(20, 0, 0, 10);
+        valueText.setLayoutParams(layoutParams);
+        valueText.setGravity(Gravity.LEFT);
+
+        keyText.setText(key);
+        valueText.setText(value);
+
+        nameValueLayout.addView(keyText);
+        nameValueLayout.addView(valueText);
+
+        return nameValueLayout;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

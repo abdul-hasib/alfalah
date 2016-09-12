@@ -1,23 +1,21 @@
 package org.apps.alfalahindia.rest;
 
-import com.google.gson.Gson;
-
-public class RestResponse {
+public class ALIFResponse {
 
     String message;
 
-    Member member;
+    Object data;
 
     public String getMessage() {
         return message;
     }
 
-    public Member getMember() {
-        return member;
+    public String getData() {
+        return JsonParser.toJson(data);
     }
 
     @Override
     public String toString() {
-        return new Gson().toJson(this).toString();
+        return JsonParser.toJson(this);
     }
 }

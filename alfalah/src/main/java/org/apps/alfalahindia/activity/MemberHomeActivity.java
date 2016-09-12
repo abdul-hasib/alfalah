@@ -6,13 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.IntentKeys;
-import org.apps.alfalahindia.enums.UserRole;
+import org.apps.alfalahindia.Util.PrefKeys;
 import org.apps.alfalahindia.fragment.BaseFragment;
 import org.apps.alfalahindia.fragment.DashboardFragment;
 import org.apps.alfalahindia.fragment.MembersListFragment;
@@ -20,7 +21,10 @@ import org.apps.alfalahindia.fragment.ObjectivesFragment;
 
 public class MemberHomeActivity extends BaseActivity {
 
+    private String TAG = MemberHomeActivity.class.getSimpleName();
     private MenuItem activeMenuItem;
+
+    private String memberDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +35,12 @@ public class MemberHomeActivity extends BaseActivity {
     private void setFirstItemNavigationView(NavigationView navigationView) {
         navigationView.getMenu().getItem(0).setChecked(true);
         navigationView.getMenu().performIdentifierAction(R.id.nav_dashboard, 0);
-        BaseFragment baseFragment = DashboardFragment.newInstance(getIntent().getExtras().getString(IntentKeys.MEMBER_OBJECT));
+
+        memberDetails = getIntent().getExtras().getString(IntentKeys.MEMBER_OBJECT);
+        BaseFragment baseFragment = DashboardFragment.newInstance(memberDetails);
         fragmentManager.replaceFragment(R.id.content_frame, baseFragment);
+
+        Log.d(TAG, prefs.getString(PrefKeys.USER_USER_ROLE));
     }
 
     @Override
@@ -44,11 +52,6 @@ public class MemberHomeActivity extends BaseActivity {
             super.onBackPressed();
         }
 
-    }
-
-    @Override
-    protected UserRole getUserRole() {
-        return UserRole.MEMBER;
     }
 
     @Override
@@ -84,9 +87,10 @@ public class MemberHomeActivity extends BaseActivity {
             case R.id.nav_slideshow:
                 break;
             case R.id.nav_dashboard:
+                fragment = DashboardFragment.newInstance(memberDetails);
                 break;
             case R.id.nav_members_list:
-                fragment = new MembersListFragment();
+                fragment = MembersListFragment.newInstance(memberDetails);
                 break;
             case R.id.nav_objectives:
                 fragment = new ObjectivesFragment();

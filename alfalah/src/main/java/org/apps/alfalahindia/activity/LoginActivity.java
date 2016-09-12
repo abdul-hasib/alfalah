@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -24,10 +23,10 @@ import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.enums.UserRole;
 import org.apps.alfalahindia.pojo.Member;
+import org.apps.alfalahindia.rest.ALIFResponse;
 import org.apps.alfalahindia.rest.JsonParser;
 import org.apps.alfalahindia.rest.RequestMethod;
-import org.apps.alfalahindia.rest.RestHelper;
-import org.apps.alfalahindia.rest.RestResponse;
+import org.apps.alfalahindia.rest.RestURI;
 import org.apps.alfalahindia.volley.ALIFStringRequest;
 
 import java.util.HashMap;
@@ -50,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        prefs = new Prefs(getBaseContext());
+        prefs = new Prefs(getApplicationContext());
 
         _loginButton = (Button) findViewById(R.id.btn_login);
         _usernameText = (EditText) findViewById(R.id.input_username);
@@ -100,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         final String username = _usernameText.getText().toString();
         final String password = _passwordText.getText().toString();
 
-        String uri = RestHelper.getUri("/member/login/");
+        String uri = RestURI.getUri("/member/login/");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         final ProgressBarHandler progressBarHandler = new ProgressBarHandler(this);
         progressBarHandler.show();
@@ -108,10 +107,10 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        ToastUtil.toast(getApplicationContext(), response);
                         progressBarHandler.hide();
-                        Intent intent = new Intent(getBaseContext(), MemberHomeActivity.class);
-                        intent.putExtra(IntentKeys.MEMBER_OBJECT, JsonParser.fromJson(response, RestResponse.class).getMember().toString());
+                        Intent intent = new Intent(getApplicationContext(), MemberHomeActivity.class);
+                        String data = JsonParser.fromJson(response, ALIFResponse.class).getData();
+                        intent.putExtra(IntentKeys.MEMBER_OBJECT, data);
                         onLoginSuccess(intent);
                     }
                 },
@@ -126,8 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("username", username);
                 params.put("password", password);
                 return params;
@@ -151,15 +149,13 @@ public class LoginActivity extends AppCompatActivity {
         // save member details in shared pref
         String s = intent.getExtras().getString(IntentKeys.MEMBER_OBJECT);
         Member member = JsonParser.fromJson(s, Member.class);
-        Log.d(TAG, member.toString());
+        Log.d(TAG, member.getRole().toString());
         prefs.setString(PrefKeys.USER_USER_ROLE, member.getRole().toString());
-
         startActivity(intent);
         this.finish();
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
         _loginButton.setEnabled(true);
     }
 
