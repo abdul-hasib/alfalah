@@ -2,11 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:context=".activity.ProgramsActivity">
 
     <LinearLayout
@@ -17,11 +17,11 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/almadadHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Al-Madad 2016"
-            android:id="@+id/almadadHeader" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <include layout="@layout/horizontal_line"></include>
 
@@ -42,19 +42,19 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="fill_parent"
         android:id="@+id/midPanel"
-        android:layout_below="@id/topPanel"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/topPanel"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/educareHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="EDUCARE 2016"
-            android:id="@+id/educareHeader" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <include layout="@layout/horizontal_line"></include>
 

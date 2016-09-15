@@ -9,8 +9,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 public class ProgressBarHandler {
-    private ProgressBar mProgressBar;
     Context context;
+    private ProgressBar mProgressBar;
 
     public ProgressBarHandler(Activity activity) {
         context = activity.getApplicationContext();
