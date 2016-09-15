@@ -6,7 +6,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import org.apps.alfalahindia.Managers.ALIFFragmentManager;
 import org.apps.alfalahindia.R;
-import org.apps.alfalahindia.Util.PrefKeys;
 import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.enums.UserRole;
 import org.apps.alfalahindia.fragment.BaseFragment;
@@ -48,8 +46,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         navigationView.setNavigationItemSelectedListener(this);
 
         fragmentManager = new ALIFFragmentManager(this);
-
-        prepareHomePage(getUserRole());
     }
 
     @Override
@@ -92,27 +88,23 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         handleMenuItemSelection(navigationView.getMenu().getItem(0));
     }
 
-    protected UserRole getUserRole() {
-        Log.d(TAG, prefs.getString(PrefKeys.USER_USER_ROLE));
-        return UserRole.valueOf(prefs.getString(PrefKeys.USER_USER_ROLE));
-    }
-
-    private void prepareHomePage(UserRole userRole) {
+    protected void prepareHomePage(UserRole userRole) {
 
         navigationView.getMenu().setGroupVisible(R.id.group_member, false);
         navigationView.getMenu().setGroupVisible(R.id.group_admin, false);
-        Log.d(TAG, userRole.toString());
+
         switch (userRole) {
             case SUPER_ADMIN:
+            case ADMIN:
                 navigationView.getMenu().setGroupVisible(R.id.group_member, true);
                 navigationView.getMenu().setGroupVisible(R.id.group_admin, true);
                 break;
             case MEMBER:
                 navigationView.getMenu().setGroupVisible(R.id.group_member, true);
                 break;
-            case GUEST:
-                // do nothing
-                break;
         }
+
+//        activeMenuItem = navigationView.getMenu().getItem(0);
+//        activeMenuItem.setChecked(true);
     }
 }

@@ -1,17 +1,19 @@
 package org.apps.alfalahindia.rest;
 
+import com.google.gson.JsonElement;
+
 public class ALIFResponse {
 
     String message;
 
-    Object data;
+    JsonElement data;
 
     public String getMessage() {
         return message;
     }
 
-    public String getData() {
-        return JsonParser.toJson(data);
+    public JsonElement getData() {
+        return data;
     }
 
     @Override

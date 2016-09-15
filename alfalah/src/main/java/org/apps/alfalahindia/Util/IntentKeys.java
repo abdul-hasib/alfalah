@@ -5,5 +5,6 @@ package org.apps.alfalahindia.Util;
  */
 public class IntentKeys {
 
-    public static String MEMBER_OBJECT = "intent_member";
+    public static final String AUTH_CODE = "auth_code";
+    public static final String USERNAME = "username";
 }

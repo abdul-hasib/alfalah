@@ -26,14 +26,12 @@ public class ALIFStringRequest extends StringRequest {
     protected VolleyError parseNetworkError(VolleyError volleyError) {
         if (volleyError.networkResponse != null && volleyError.networkResponse.data != null) {
             String error = new String(volleyError.networkResponse.data);
-            Log.d(TAG, error);
             try {
                 error = URLDecoder.decode(error, "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
             ALIFRestResponse alifRestResponse = JsonParser.fromJson(error, ALIFRestResponse.class);
-            Log.d(TAG, alifRestResponse.getResponse().toString());
             volleyError = new VolleyError(alifRestResponse.getResponse().toString());
         }
         return volleyError;

@@ -16,7 +16,7 @@ public class BaseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prefs = new Prefs(getActivity());
+        prefs = new Prefs(getActivity().getApplicationContext());
     }
 
     public String getFragmentTag() {

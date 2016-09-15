@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import org.apps.alfalahindia.R;
+import org.apps.alfalahindia.Util.PrefKeys;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.adapters.MemberListAdapter;
@@ -34,21 +35,12 @@ import java.util.Map;
 
 public class MembersListFragment extends BaseFragment {
 
-    private static final String ARG_MEMBER = "member";
     String TAG = MembersListFragment.class.getSimpleName();
     ListView membersListview;
     TextView emptyListview;
     ProgressBarHandler progressBarHandler = null;
+    String authCode;
     private List<Member> members;
-    private String memberDetails;
-
-    public static MembersListFragment newInstance(String member) {
-        MembersListFragment fragment = new MembersListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_MEMBER, member);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,6 +50,8 @@ public class MembersListFragment extends BaseFragment {
         emptyListview = (TextView) view.findViewById(R.id.emptyElement);
 
         setHasOptionsMenu(true);
+
+        authCode = prefs.getString(PrefKeys.USER_AUTH_TOKEN);
         requestData();
         return view;
     }
@@ -65,14 +59,6 @@ public class MembersListFragment extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_member_list, menu);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            memberDetails = getArguments().getString(ARG_MEMBER);
-        }
     }
 
     @Override
@@ -101,11 +87,10 @@ public class MembersListFragment extends BaseFragment {
 
     private void requestData() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        progressBarHandler = new ProgressBarHandler(this.getActivity());
+        progressBarHandler = new ProgressBarHandler(getActivity());
 
         Map<String, String> params = new HashMap<>();
-        Member member = JsonParser.fromJson(memberDetails, Member.class);
-        params.put("authCode", member.getAuthCode());
+        params.put("authCode", authCode);
 
         String uri = RestURI.getUri("/member/list/", params);
         progressBarHandler.show();
@@ -114,7 +99,7 @@ public class MembersListFragment extends BaseFragment {
                     @Override
                     public void onResponse(String response) {
                         ALIFResponse alifResponse = JsonParser.fromJson(response, ALIFResponse.class);
-                        members = Arrays.asList(JsonParser.fromJson(alifResponse.getData().toString(), Member[].class));
+                        members = Arrays.asList(JsonParser.fromJson(JsonParser.toJson(alifResponse.getData()), Member[].class));
                         try {
                             updateDisplay();
                         } catch (Exception e) {

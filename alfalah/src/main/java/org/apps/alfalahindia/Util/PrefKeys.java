@@ -2,7 +2,9 @@ package org.apps.alfalahindia.Util;
 
 
 public class PrefKeys {
-    public static final String USER_USER_ROLE = "pref_user_role";
+    public static final String MEMBER_USER_NAME = "pref_member_alif_id";
+
+    public static final String MEMBER_ROLE = "pref_member_role";
 
     public static String USER_ACCOUNT_ACTIVATED = "pref_user_account_activated";
 

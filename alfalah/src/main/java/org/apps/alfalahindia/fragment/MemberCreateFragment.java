@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 
@@ -22,11 +23,13 @@ import com.google.gson.reflect.TypeToken;
 
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.ConnectionDetector;
+import org.apps.alfalahindia.Util.PrefKeys;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.enums.UserRole;
 import org.apps.alfalahindia.pojo.Member;
 import org.apps.alfalahindia.rest.ALIFResponse;
+import org.apps.alfalahindia.rest.JsonParser;
 import org.apps.alfalahindia.rest.RequestMethod;
 import org.apps.alfalahindia.rest.RestURI;
 import org.apps.alfalahindia.volley.ALIFStringRequest;
@@ -40,6 +43,7 @@ public class MemberCreateFragment extends BaseFragment {
     EditText emailText;
     EditText mobileText;
     EditText usernameText;
+    Button signupBtn;
     Switch role;
 
     ProgressBarHandler progressBarHandler = null;
@@ -60,7 +64,17 @@ public class MemberCreateFragment extends BaseFragment {
         emailText = (EditText) view.findViewById(R.id.input_email);
         mobileText = (EditText) view.findViewById(R.id.input_mobile);
         usernameText = (EditText) view.findViewById(R.id.input_username);
+        signupBtn = (Button) view.findViewById(R.id.btn_signup);
         role = (Switch) view.findViewById(R.id.input_role);
+
+        signupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (validateParameters() && ConnectionDetector.isOnline(getActivity())) {
+                    createMember();
+                }
+            }
+        });
 
         return view;
     }
@@ -72,7 +86,7 @@ public class MemberCreateFragment extends BaseFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_member_save, menu);
+        // inflater.inflate(R.menu.menu_member_save, menu);
     }
 
     @Override
@@ -156,12 +170,12 @@ public class MemberCreateFragment extends BaseFragment {
         ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                System.out.println("Calling get params");
                 Member member = new Member();
                 member.setName(nameText.getText().toString());
                 member.setEmail(emailText.getText().toString());
                 member.setMobile(mobileText.getText().toString());
                 member.setUsername(usernameText.getText().toString());
+                member.setAuthCode(prefs.getString(PrefKeys.USER_AUTH_TOKEN));
 
                 if (role.isChecked()) {
                     member.setRole(UserRole.ADMIN);
@@ -173,7 +187,8 @@ public class MemberCreateFragment extends BaseFragment {
                 }.getType();
 
                 Gson gson = new Gson();
-                return gson.fromJson(gson.toJson(member), type);
+                System.out.println(gson.fromJson(JsonParser.toJson(member), type).toString());
+                return gson.fromJson(JsonParser.toJson(member), type);
             }
         };
 

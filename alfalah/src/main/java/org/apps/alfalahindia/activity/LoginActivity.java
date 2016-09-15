@@ -22,12 +22,11 @@ import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.enums.UserRole;
-import org.apps.alfalahindia.pojo.Member;
-import org.apps.alfalahindia.rest.ALIFResponse;
-import org.apps.alfalahindia.rest.JsonParser;
 import org.apps.alfalahindia.rest.RequestMethod;
 import org.apps.alfalahindia.rest.RestURI;
 import org.apps.alfalahindia.volley.ALIFStringRequest;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
+    ProgressBarHandler progressBarHandler;
 
     Prefs prefs;
     EditText _usernameText;
@@ -51,6 +51,13 @@ public class LoginActivity extends AppCompatActivity {
 
         prefs = new Prefs(getApplicationContext());
 
+        // if member already logged in, redirect to home page
+        String authCode = prefs.getString(PrefKeys.USER_AUTH_TOKEN);
+        String username = prefs.getString(PrefKeys.MEMBER_USER_NAME);
+        if (authCode != null && username != null) {
+            redirectToMemberHomePage(authCode, username);
+        }
+
         _loginButton = (Button) findViewById(R.id.btn_login);
         _usernameText = (EditText) findViewById(R.id.input_username);
         _passwordText = (EditText) findViewById(R.id.input_password);
@@ -58,7 +65,6 @@ public class LoginActivity extends AppCompatActivity {
         _skipLink = (TextView) findViewById(R.id.link_skip);
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 login();
@@ -78,13 +84,14 @@ public class LoginActivity extends AppCompatActivity {
         _skipLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                prefs.setString(PrefKeys.USER_USER_ROLE, UserRole.GUEST.toString());
+                prefs.setString(PrefKeys.MEMBER_ROLE, UserRole.GUEST.toString());
                 Intent intent = new Intent(getApplicationContext(), GuestHomeActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
     }
+
 
     public void login() {
         Log.d(TAG, "Login");
@@ -100,17 +107,26 @@ public class LoginActivity extends AppCompatActivity {
         final String password = _passwordText.getText().toString();
 
         String uri = RestURI.getUri("/member/login/");
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        final ProgressBarHandler progressBarHandler = new ProgressBarHandler(this);
+        progressBarHandler = new ProgressBarHandler(this);
         progressBarHandler.show();
+
         ALIFStringRequest request = new ALIFStringRequest(RequestMethod.POST, uri,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progressBarHandler.hide();
                         Intent intent = new Intent(getApplicationContext(), MemberHomeActivity.class);
-                        String data = JsonParser.fromJson(response, ALIFResponse.class).getData();
-                        intent.putExtra(IntentKeys.MEMBER_OBJECT, data);
+                        String authCode = null;
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            authCode = jsonObject.getString("data");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        intent.putExtra(IntentKeys.AUTH_CODE, authCode);
+                        intent.putExtra(IntentKeys.USERNAME, username);
                         onLoginSuccess(intent);
                     }
                 },
@@ -134,7 +150,6 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {
@@ -144,15 +159,21 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void onLoginSuccess(Intent intent) {
+    private void redirectToMemberHomePage(String authCode, String username) {
+        Intent intent = new Intent(this, MemberHomeActivity.class);
 
-        // save member details in shared pref
-        String s = intent.getExtras().getString(IntentKeys.MEMBER_OBJECT);
-        Member member = JsonParser.fromJson(s, Member.class);
-        Log.d(TAG, member.getRole().toString());
-        prefs.setString(PrefKeys.USER_USER_ROLE, member.getRole().toString());
+        prefs.setString(PrefKeys.USER_AUTH_TOKEN, authCode);
+        prefs.setString(PrefKeys.MEMBER_USER_NAME, username);
+
         startActivity(intent);
         this.finish();
+    }
+
+    public void onLoginSuccess(Intent intent) {
+        // save member details in shared pref
+        String authCode = intent.getExtras().getString(IntentKeys.AUTH_CODE);
+        String username = intent.getExtras().getString(IntentKeys.USERNAME);
+        redirectToMemberHomePage(authCode, username);
     }
 
     public void onLoginFailed() {

@@ -89,7 +89,7 @@ public class SignupActivity extends AppCompatActivity {
 
         _signupButton.setEnabled(false);
 
-        String uri = RestURI.getUri("/member/activate/");
+        String uri = RestURI.getUri("/member/signup/");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         final ProgressBarHandler progressBarHandler = new ProgressBarHandler(this);
         progressBarHandler.show();
@@ -136,11 +136,11 @@ public class SignupActivity extends AppCompatActivity {
 
     public void onSignupSuccess(ALIFResponse response) {
         _signupButton.setEnabled(true);
-        ToastUtil.toast(getApplicationContext(), response.getMessage());
-        Intent intent = new Intent(this, MemberHomeActivity.class);
-        intent.putExtra(IntentKeys.MEMBER_OBJECT, response.getData());
+        Intent intent = new Intent();
+        intent.putExtra(IntentKeys.AUTH_CODE, response.getData().toString());
+        intent.putExtra(IntentKeys.USERNAME, _usernameText.getText());
         setResult(RESULT_OK, intent);
-        finish();
+        this.finish();
     }
 
     public void onSignupFailed() {
