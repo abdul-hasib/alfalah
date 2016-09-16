@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Server Info">
+
+        <SwitchPreference
+            android:key="checkbox_work_online"
+            android:summary="Work online with alfalahindia.org"
+            android:title="Online" />
+
+        <EditTextPreference
+            android:dependency="checkbox_work_online"
+            android:dialogTitle="Server IP Address"
+            android:key="offline_server"
+            android:summary="IP Address fo the server to work offline"
+            android:title="Offline Server" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="About Us">
+
+        <Preference android:title="visit AlFalah India website">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://alfalahindia.org/" />
+        </Preference>
+
+    </PreferenceCategory>
+</PreferenceScreen>

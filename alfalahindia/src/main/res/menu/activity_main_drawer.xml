@@ -8,6 +8,15 @@
             android:id="@+id/nav_dashboard"
             android:icon="@android:drawable/ic_dialog_dialer"
             android:title="Dashboard" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@android:drawable/ic_lock_power_off"
+            android:title="Logout" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Settings" />
     </group>
 
     <group
@@ -30,9 +39,6 @@
     <group
         android:id="@+id/group_admin"
         android:checkableBehavior="all">
-        <item
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Settings" />
         <item
             android:id="@+id/nav_members_list"
             android:icon="@drawable/ic_menu_share"

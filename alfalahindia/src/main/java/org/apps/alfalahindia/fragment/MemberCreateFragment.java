@@ -154,7 +154,7 @@ public class MemberCreateFragment extends BaseFragment {
                     public void onResponse(String response) {
                         ToastUtil.toast(getActivity().getApplicationContext(), response);
                         progressBarHandler.hide();
-                        getActivity().getSupportFragmentManager().popBackStack();
+                        getActivity().getFragmentManager().popBackStack();
                     }
                 },
                 new Response.ErrorListener() {

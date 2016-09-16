@@ -1,17 +1,15 @@
 package org.apps.alfalahindia.fragment;
 
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
-import org.apps.alfalahindia.Managers.ALIFFragmentManager;
 import org.apps.alfalahindia.Util.Prefs;
 
 
 public class BaseFragment extends Fragment {
 
     Prefs prefs;
-    ALIFFragmentManager fragmentManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

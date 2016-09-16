@@ -1,8 +1,5 @@
 package org.apps.alfalahindia.rest;
 
-
-import org.apache.http.HttpStatus;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -42,7 +39,7 @@ public class HttpManager {
             }
 
             int status = httpURLConnection.getResponseCode();
-            if (status >= HttpStatus.SC_BAD_REQUEST) {
+            if (status >= HttpURLConnection.HTTP_BAD_REQUEST) {
                 reader = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
             } else {
                 reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));

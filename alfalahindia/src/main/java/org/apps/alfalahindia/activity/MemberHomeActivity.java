@@ -1,19 +1,19 @@
 package org.apps.alfalahindia.activity;
 
+import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.preference.PreferenceFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
+import org.apps.alfalahindia.Managers.ALIFFragmentManager;
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.PrefKeys;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
@@ -54,7 +54,6 @@ public class MemberHomeActivity extends BaseActivity {
         Map<String, String> params = new HashMap<>();
         params.put("authCode", authCode);
         params.put("username", username);
-
         String uri = RestURI.getUri("/member/get/", params);
 
         progressBarHandler.show();
@@ -66,7 +65,9 @@ public class MemberHomeActivity extends BaseActivity {
                         member = JsonParser.fromJson(JsonParser.toJson(alifResponse.getData()), Member.class);
                         progressBarHandler.hide();
                         prepareHomePage(member.getRole());
-                        fragmentManager.addFragment(R.id.content_frame, DashboardFragment.newInstance(member.toString()));
+                        fragmentManager.pushFragment(R.id.content_frame, DashboardFragment.newInstance(member));
+                        activeMenuItem = navigationView.getMenu().getItem(0);
+                        activeMenuItem.setChecked(true);
                     }
                 },
                 new Response.ErrorListener() {
@@ -89,27 +90,6 @@ public class MemberHomeActivity extends BaseActivity {
         } else {
             super.onBackPressed();
         }
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -122,10 +102,11 @@ public class MemberHomeActivity extends BaseActivity {
         switch (id) {
             case R.id.nav_gallery:
                 break;
-            case R.id.nav_slideshow:
+            case R.id.nav_manage:
+                fragment = new SettingsFragment();
                 break;
             case R.id.nav_dashboard:
-                fragment = DashboardFragment.newInstance(member.toString());
+                fragment = DashboardFragment.newInstance(member);
                 break;
             case R.id.nav_members_list:
                 fragment = new MembersListFragment();
@@ -133,14 +114,20 @@ public class MemberHomeActivity extends BaseActivity {
             case R.id.nav_objectives:
                 fragment = new ObjectivesFragment();
                 break;
+            case R.id.nav_logout:
+                prefs.setString(PrefKeys.USER_AUTH_TOKEN, null);
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                this.finish();
+                break;
             default:
                 break;
         }
 
         if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
+            ALIFFragmentManager fragmentManager = new ALIFFragmentManager(this);
             String backStateName = fragment.getClass().getName();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(backStateName).commit();
+            fragmentManager.replaceFragment(R.id.content_frame, fragment);
 
             if (activeMenuItem != null) {
                 activeMenuItem.setChecked(false);
@@ -152,5 +139,15 @@ public class MemberHomeActivity extends BaseActivity {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    public static class SettingsFragment extends PreferenceFragment {
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.preferences);
+        }
     }
 }

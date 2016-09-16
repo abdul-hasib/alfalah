@@ -35,6 +35,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -69,7 +71,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
     public void onClick(View view) {
         BaseFragment fragment = new MemberRegisterFragment();
-        fragmentManager.pushFragment(R.id.content_frame, fragment);
+        fragmentManager.replaceFragment(R.id.content_frame, fragment);
     }
 
     protected void handleMenuItemSelection(MenuItem item) {

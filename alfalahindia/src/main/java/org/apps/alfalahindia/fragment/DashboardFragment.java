@@ -19,10 +19,10 @@ public class DashboardFragment extends BaseFragment {
     LinearLayout dashboardLayout;
     Member member;
 
-    public static DashboardFragment newInstance(String member) {
+    public static DashboardFragment newInstance(Member member) {
         DashboardFragment fragment = new DashboardFragment();
         Bundle args = new Bundle();
-        args.putString(FRAGMENT_ARGUMENT, member);
+        args.putString(FRAGMENT_ARGUMENT, member.toString());
         fragment.setArguments(args);
         return fragment;
     }
