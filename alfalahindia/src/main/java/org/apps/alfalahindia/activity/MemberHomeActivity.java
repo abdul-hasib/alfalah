@@ -65,7 +65,7 @@ public class MemberHomeActivity extends BaseActivity {
                         member = JsonParser.fromJson(JsonParser.toJson(alifResponse.getData()), Member.class);
                         progressBarHandler.hide();
                         prepareHomePage(member.getRole());
-                        fragmentManager.pushFragment(R.id.content_frame, DashboardFragment.newInstance(member));
+                        fragmentManager.addFragment(R.id.content_frame, DashboardFragment.newInstance(member));
                         activeMenuItem = navigationView.getMenu().getItem(0);
                         activeMenuItem.setChecked(true);
                     }
