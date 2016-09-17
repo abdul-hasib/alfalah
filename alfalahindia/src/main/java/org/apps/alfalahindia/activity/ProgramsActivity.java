@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.FileDownloader;
-import org.apps.alfalahindia.Util.Msg;
+import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.res.Forms;
 
 
@@ -50,7 +50,7 @@ public class ProgramsActivity extends ActionBarActivity {
             FileDownloader.download(getApplicationContext(), url,
                     name, description);
         } catch (Exception e) {
-            Msg.showLong(getApplicationContext(), e.getLocalizedMessage());
+            ToastUtil.toast(getApplicationContext(), e.getLocalizedMessage());
         }
     }
 

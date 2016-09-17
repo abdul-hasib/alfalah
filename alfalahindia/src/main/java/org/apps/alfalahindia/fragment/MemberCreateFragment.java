@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.apps.alfalahindia.Managers.DatetimeManager;
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.ConnectionDetector;
 import org.apps.alfalahindia.Util.PrefKeys;
@@ -43,6 +44,7 @@ public class MemberCreateFragment extends BaseFragment {
     EditText emailText;
     EditText mobileText;
     EditText usernameText;
+    EditText dateText;
     Button signupBtn;
     Switch role;
 
@@ -58,7 +60,7 @@ public class MemberCreateFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_member_create, container, false);
+        final View view = inflater.inflate(R.layout.fragment_member_create, container, false);
 
         nameText = (EditText) view.findViewById(R.id.input_name);
         emailText = (EditText) view.findViewById(R.id.input_email);
@@ -66,6 +68,15 @@ public class MemberCreateFragment extends BaseFragment {
         usernameText = (EditText) view.findViewById(R.id.input_username);
         signupBtn = (Button) view.findViewById(R.id.btn_signup);
         role = (Switch) view.findViewById(R.id.input_role);
+        dateText = (EditText) view.findViewById(R.id.input_date);
+
+        dateText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatetimeManager datetimeManager = new DatetimeManager(getActivity(), dateText);
+                datetimeManager.onFocusChange(view, true);
+            }
+        });
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override

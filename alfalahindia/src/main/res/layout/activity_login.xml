@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@mipmap/ic_person"
                         android:drawableStart="@mipmap/ic_person"
-                        android:drawableTint="#FF4081"
+                        android:drawableTint="#60b0c9"
                         android:hint="User Name"
                         android:inputType="textCapCharacters"
                         android:singleLine="true" />
@@ -71,7 +71,7 @@
                         android:layout_marginTop="16dp"
                         android:drawableLeft="@mipmap/ic_lock"
                         android:drawableStart="@mipmap/ic_lock"
-                        android:drawableTint="#FF4081"
+                        android:drawableTint="#60b0c9"
                         android:hint="Password"
                         android:inputType="textPassword"
                         android:singleLine="true" />

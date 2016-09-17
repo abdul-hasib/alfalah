@@ -3,7 +3,6 @@ package org.apps.alfalahindia.activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
@@ -21,6 +20,7 @@ import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.fragment.DashboardFragment;
 import org.apps.alfalahindia.fragment.MembersListFragment;
 import org.apps.alfalahindia.fragment.ObjectivesFragment;
+import org.apps.alfalahindia.fragment.SettingsFragment;
 import org.apps.alfalahindia.pojo.Member;
 import org.apps.alfalahindia.rest.ALIFResponse;
 import org.apps.alfalahindia.rest.JsonParser;
@@ -139,15 +139,5 @@ public class MemberHomeActivity extends BaseActivity {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-
-    public static class SettingsFragment extends PreferenceFragment {
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.preferences);
-        }
     }
 }
