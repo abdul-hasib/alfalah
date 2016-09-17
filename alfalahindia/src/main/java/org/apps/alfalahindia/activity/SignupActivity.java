@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -37,7 +38,7 @@ public class SignupActivity extends AppCompatActivity {
     EditText _emailText;
     EditText _mobileText;
     EditText _passwordText;
-    Button _registerBtn;
+    Button _signupButton;
     TextView _loginLink;
 
     private void init() {
@@ -46,7 +47,7 @@ public class SignupActivity extends AppCompatActivity {
         _passwordText = (EditText) findViewById(R.id.input_password);
         _emailText = (EditText) findViewById(R.id.input_email);
         _mobileText = (EditText) findViewById(R.id.input_mobile);
-        _registerBtn = (Button) findViewById(R.id.btn_register);
+        _signupButton = (Button) findViewById(R.id.btn_register);
         _loginLink = (TextView) findViewById(R.id.link_login);
     }
 
@@ -57,7 +58,7 @@ public class SignupActivity extends AppCompatActivity {
 
         init();
 
-        _registerBtn.setOnClickListener(new View.OnClickListener() {
+        _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signup();
@@ -81,7 +82,7 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-        _registerBtn.setEnabled(false);
+        _signupButton.setEnabled(false);
 
         String uri = RestURI.getUri("/member/signup/");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -129,7 +130,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onSignupSuccess(ALIFResponse response) {
-        _registerBtn.setEnabled(true);
+        _signupButton.setEnabled(true);
         Intent intent = new Intent();
         intent.putExtra(IntentKeys.AUTH_CODE, response.getData().toString());
         intent.putExtra(IntentKeys.USERNAME, _usernameText.getText());
@@ -138,8 +139,8 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onSignupFailed() {
-        ToastUtil.toast("Signup failed");
-        _registerBtn.setEnabled(true);
+        Toast.makeText(getApplicationContext(), "Signup failed", Toast.LENGTH_LONG).show();
+        _signupButton.setEnabled(true);
     }
 
     public boolean validate() {
