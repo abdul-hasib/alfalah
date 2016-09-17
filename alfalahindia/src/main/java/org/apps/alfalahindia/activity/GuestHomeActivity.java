@@ -6,6 +6,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 
 import org.apps.alfalahindia.R;
+import org.apps.alfalahindia.enums.UserRole;
 import org.apps.alfalahindia.fragment.BaseFragment;
 import org.apps.alfalahindia.fragment.MembersListFragment;
 import org.apps.alfalahindia.fragment.ObjectivesFragment;
@@ -16,6 +17,7 @@ public class GuestHomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentManager.addFragment(R.id.content_frame, new ObjectivesFragment());
+        prepareHomePage(UserRole.GUEST);
     }
 
     @Override
