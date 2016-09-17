@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class RestURI {
 
-    private static final String SERVER_BASE_URI = "http://alfalahindia.org/rest";
+    private static final String SERVER_BASE_URI = "http://alfalahindia.org/rest/v1/api";
 
-    private static final String LOCAL_BASE_URI = "http://192.168.184.1/alifrest";
+    private static final String LOCAL_BASE_URI = "http://192.168.184.1/alifrest/v1/api";
 
     private static String getBaseURI() {
         return SERVER_BASE_URI;

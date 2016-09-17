@@ -15,6 +15,10 @@ public class ALIFFragmentManager {
         fm = activity.getFragmentManager();
     }
 
+    public FragmentManager getFragmentManager() {
+        return fm;
+    }
+
     private void handleFragment(@IdRes int containerViewId,
                                 @NonNull Fragment fragment, boolean popLastFragment) {
 

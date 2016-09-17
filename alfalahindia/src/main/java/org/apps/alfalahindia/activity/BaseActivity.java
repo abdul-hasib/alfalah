@@ -74,8 +74,5 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 navigationView.getMenu().setGroupVisible(R.id.group_member, true);
                 break;
         }
-
-//        activeMenuItem = navigationView.getMenu().getItem(0);
-//        activeMenuItem.setChecked(true);
     }
 }

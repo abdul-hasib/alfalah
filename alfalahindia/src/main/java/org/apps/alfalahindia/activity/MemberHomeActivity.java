@@ -65,9 +65,14 @@ public class MemberHomeActivity extends BaseActivity {
                         member = JsonParser.fromJson(JsonParser.toJson(alifResponse.getData()), Member.class);
                         progressBarHandler.hide();
                         prepareHomePage(member.getRole());
-                        fragmentManager.addFragment(R.id.content_frame, DashboardFragment.newInstance(member));
                         activeMenuItem = navigationView.getMenu().getItem(0);
                         activeMenuItem.setChecked(true);
+
+                        if (fragmentManager.getFragmentManager().getBackStackEntryCount() >= 1) {
+                            fragmentManager.replaceFragment(R.id.content_frame, DashboardFragment.newInstance(member));
+                        } else {
+                            fragmentManager.addFragment(R.id.content_frame, DashboardFragment.newInstance(member));
+                        }
                     }
                 },
                 new Response.ErrorListener() {

@@ -20,7 +20,7 @@ public class FileDownloader {
     public static boolean download(Context context, String DownloadUrl, String fileName, String description) throws Exception {
 
         if (!ConnectionDetector.isOnline(context)) {
-            Msg.showLong(context, "You need internet connection to download the application");
+            ToastUtil.toast(context, "You need internet connection to download the application");
             return false;
         }
 
