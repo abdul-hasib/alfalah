@@ -1,7 +1,7 @@
 package org.apps.alfalahindia.Util;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import org.apps.alfalahindia.activity.App;
 
@@ -11,7 +11,7 @@ public class Prefs {
 
     private static SharedPreferences getSharedPref() {
         if (sharedPref == null) {
-            sharedPref = App.getContext().getSharedPreferences("ALIF_PREFS", Activity.MODE_PRIVATE);
+            sharedPref = PreferenceManager.getDefaultSharedPreferences(App.getContext());
         }
         return sharedPref;
     }

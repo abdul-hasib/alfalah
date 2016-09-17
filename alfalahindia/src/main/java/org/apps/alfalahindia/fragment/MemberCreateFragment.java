@@ -46,8 +46,8 @@ public class MemberCreateFragment extends BaseFragment {
     EditText mobileText;
     EditText usernameText;
     EditText dateText;
-    Button signupBtn;
-    Switch role;
+    Button addMemberBtn;
+    Switch memberType;
 
     ProgressBarHandler progressBarHandler = null;
 
@@ -67,19 +67,19 @@ public class MemberCreateFragment extends BaseFragment {
         emailText = (EditText) view.findViewById(R.id.input_email);
         mobileText = (EditText) view.findViewById(R.id.input_mobile);
         usernameText = (EditText) view.findViewById(R.id.input_username);
-        signupBtn = (Button) view.findViewById(R.id.btn_signup);
-        role = (Switch) view.findViewById(R.id.input_role);
+        addMemberBtn = (Button) view.findViewById(R.id.btn_add_member);
+        memberType = (Switch) view.findViewById(R.id.switch_member_type);
         dateText = (EditText) view.findViewById(R.id.input_date);
 
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatetimeManager datetimeManager = new DatetimeManager(dateText);
+                DatetimeManager datetimeManager = new DatetimeManager(dateText, getActivity());
                 datetimeManager.onFocusChange(view, true);
             }
         });
 
-        signupBtn.setOnClickListener(new View.OnClickListener() {
+        addMemberBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validateParameters() && ConnectionDetector.isOnline()) {
@@ -188,12 +188,8 @@ public class MemberCreateFragment extends BaseFragment {
                 member.setMobile(mobileText.getText().toString());
                 member.setUsername(usernameText.getText().toString());
                 member.setAuthCode(Prefs.getString(PrefKeys.USER_AUTH_TOKEN));
-
-                if (role.isChecked()) {
-                    member.setRole(UserRole.ADMIN);
-                } else {
-                    member.setRole(UserRole.GUEST);
-                }
+                member.setRole(UserRole.GUEST);
+                member.setMemberType(memberType.isActivated() ? "LIFETIME" : "REGULAR");
 
                 Type type = new TypeToken<Map<String, String>>() {
                 }.getType();

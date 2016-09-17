@@ -55,7 +55,7 @@
                         android:drawableLeft="@mipmap/ic_person"
                         android:drawableStart="@mipmap/ic_person"
                         android:drawableTint="#60b0c9"
-                        android:hint="User Name"
+                        android:hint="ALIF Member ID"
                         android:inputType="textCapCharacters"
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
@@ -106,7 +106,8 @@
                 android:layout_gravity="end"
                 android:elevation="4dp"
                 android:paddingTop="5dp"
-                android:text="Activate online account" />
+                android:text="Activate online account"
+                android:textColor="@color/blue_normal" />
 
             <TextView
                 android:id="@+id/link_skip"
@@ -117,7 +118,8 @@
                 android:layout_gravity="end"
                 android:elevation="4dp"
                 android:paddingTop="5dp"
-                android:text="Skip >" />
+                android:text="Skip >"
+                android:textColor="@color/blue_normal" />
         </RelativeLayout>
 
         <ImageButton
