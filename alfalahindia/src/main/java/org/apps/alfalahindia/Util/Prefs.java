@@ -1,45 +1,47 @@
 package org.apps.alfalahindia.Util;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.apps.alfalahindia.activity.App;
+
 public class Prefs {
-    SharedPreferences preferences;
 
-    Prefs prefs = null;
-    Context context;
+    static SharedPreferences sharedPref = null;
 
-    public Prefs(Context context) {
-        preferences = context.getSharedPreferences("ALIF_PREFS", Activity.MODE_PRIVATE);
+    private static SharedPreferences getSharedPref() {
+        if (sharedPref == null) {
+            sharedPref = App.getContext().getSharedPreferences("ALIF_PREFS", Activity.MODE_PRIVATE);
+        }
+        return sharedPref;
     }
 
-    public String getString(String key) {
-        return preferences.getString(key, null);
+    private static SharedPreferences.Editor getEditor() {
+        return getSharedPref().edit();
     }
 
-    public boolean getBoolean(String key) {
-        return preferences.getBoolean(key, false);
+    public static String getString(String key) {
+        return getSharedPref().getString(key, null);
     }
 
-    public int getInt(String key) {
-        return preferences.getInt(key, 0);
+    public static boolean getBoolean(String key) {
+        return getSharedPref().getBoolean(key, false);
     }
 
-    public void setString(String key, String value) {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(key, value);
-        editor.apply();
+    public static int getInt(String key) {
+        return getSharedPref().getInt(key, 0);
     }
 
-    public void setBoolean(String key, boolean value) {
-        preferences.edit().putBoolean(key, false);
-        preferences.edit().apply();
+    public static void setString(String key, String value) {
+        getEditor().putString(key, value).apply();
     }
 
-    public void setInt(String key, int value) {
-        preferences.edit().putInt(key, value);
-        preferences.edit().apply();
+    public static void setBoolean(String key, boolean value) {
+        getEditor().putBoolean(key, false).apply();
+    }
+
+    public static void setInt(String key, int value) {
+        getEditor().putInt(key, value).apply();
     }
 
 }

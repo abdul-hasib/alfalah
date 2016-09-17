@@ -15,6 +15,7 @@ import com.android.volley.toolbox.Volley;
 import org.apps.alfalahindia.Managers.ALIFFragmentManager;
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.PrefKeys;
+import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.fragment.DashboardFragment;
@@ -42,8 +43,8 @@ public class MemberHomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String username = prefs.getString(PrefKeys.MEMBER_USER_NAME);
-        String authCode = prefs.getString(PrefKeys.USER_AUTH_TOKEN);
+        String username = Prefs.getString(PrefKeys.MEMBER_USER_NAME);
+        String authCode = Prefs.getString(PrefKeys.USER_AUTH_TOKEN);
         requestData(username, authCode);
     }
 
@@ -78,7 +79,7 @@ public class MemberHomeActivity extends BaseActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        ToastUtil.toast(getApplicationContext(), error.getMessage());
+                        ToastUtil.toast(error.getMessage());
                         progressBarHandler.hide();
                     }
                 }
@@ -120,7 +121,7 @@ public class MemberHomeActivity extends BaseActivity {
                 fragment = new ObjectivesFragment();
                 break;
             case R.id.nav_logout:
-                prefs.setString(PrefKeys.USER_AUTH_TOKEN, null);
+                Prefs.setString(PrefKeys.USER_AUTH_TOKEN, null);
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 this.finish();

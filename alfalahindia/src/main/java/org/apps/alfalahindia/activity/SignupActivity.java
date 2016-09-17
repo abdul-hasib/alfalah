@@ -18,7 +18,6 @@ import com.android.volley.toolbox.Volley;
 
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.IntentKeys;
-import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.rest.ALIFResponse;
@@ -33,8 +32,6 @@ import java.util.Map;
 public class SignupActivity extends AppCompatActivity {
 
     private static final String TAG = "SignupActivity";
-
-    Prefs prefs;
 
     EditText _usernameText;
     EditText _nameText;
@@ -60,8 +57,6 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         init();
-
-        prefs = new Prefs(getApplicationContext());
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +101,7 @@ public class SignupActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        ToastUtil.toast(getApplicationContext(), error.getMessage());
+                        ToastUtil.toast(error.getMessage());
                         progressBarHandler.hide();
                         onSignupFailed();
                     }

@@ -10,7 +10,6 @@ import android.view.MenuItem;
 
 import org.apps.alfalahindia.Managers.ALIFFragmentManager;
 import org.apps.alfalahindia.R;
-import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.enums.UserRole;
 
 public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -18,15 +17,12 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     protected NavigationView navigationView;
     protected MenuItem activeMenuItem;
     ALIFFragmentManager fragmentManager;
-    Prefs prefs;
     private String TAG = BaseActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        prefs = new Prefs(getApplicationContext());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

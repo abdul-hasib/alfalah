@@ -25,6 +25,7 @@ import org.apps.alfalahindia.Managers.DatetimeManager;
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.ConnectionDetector;
 import org.apps.alfalahindia.Util.PrefKeys;
+import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.enums.UserRole;
@@ -73,7 +74,7 @@ public class MemberCreateFragment extends BaseFragment {
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatetimeManager datetimeManager = new DatetimeManager(getActivity(), dateText);
+                DatetimeManager datetimeManager = new DatetimeManager(dateText);
                 datetimeManager.onFocusChange(view, true);
             }
         });
@@ -81,7 +82,7 @@ public class MemberCreateFragment extends BaseFragment {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validateParameters() && ConnectionDetector.isOnline(getActivity())) {
+                if (validateParameters() && ConnectionDetector.isOnline()) {
                     createMember();
                 }
             }
@@ -104,7 +105,7 @@ public class MemberCreateFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_save_member:
-                if (validateParameters() && ConnectionDetector.isOnline(getActivity())) {
+                if (validateParameters() && ConnectionDetector.isOnline()) {
                     createMember();
                 }
                 return true;
@@ -163,7 +164,7 @@ public class MemberCreateFragment extends BaseFragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        ToastUtil.toast(getActivity().getApplicationContext(), response);
+                        ToastUtil.toast(response);
                         progressBarHandler.hide();
                         getActivity().getFragmentManager().popBackStack();
                     }
@@ -173,7 +174,7 @@ public class MemberCreateFragment extends BaseFragment {
                     public void onErrorResponse(VolleyError error) {
                         if (error != null) {
                             ALIFResponse ALIFResponse = new Gson().fromJson(error.getMessage(), ALIFResponse.class);
-                            ToastUtil.toast(getActivity().getApplicationContext(), ALIFResponse.getMessage());
+                            ToastUtil.toast(ALIFResponse.getMessage());
                         }
                         progressBarHandler.hide();
                     }
@@ -186,7 +187,7 @@ public class MemberCreateFragment extends BaseFragment {
                 member.setEmail(emailText.getText().toString());
                 member.setMobile(mobileText.getText().toString());
                 member.setUsername(usernameText.getText().toString());
-                member.setAuthCode(prefs.getString(PrefKeys.USER_AUTH_TOKEN));
+                member.setAuthCode(Prefs.getString(PrefKeys.USER_AUTH_TOKEN));
 
                 if (role.isChecked()) {
                     member.setRole(UserRole.ADMIN);

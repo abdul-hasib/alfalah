@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import org.apps.alfalahindia.activity.App;
+
 import java.util.Calendar;
 
 public class DatetimeManager implements View.OnFocusChangeListener, DatePickerDialog.OnDateSetListener {
@@ -15,8 +17,8 @@ public class DatetimeManager implements View.OnFocusChangeListener, DatePickerDi
     private EditText editText;
     private Calendar calendar;
 
-    public DatetimeManager(Context context, EditText editText) {
-        this.context = context;
+    public DatetimeManager(EditText editText) {
+        this.context = App.getContext();
         this.editText = editText;
         this.editText.setOnFocusChangeListener(this);
         this.calendar = Calendar.getInstance();
@@ -34,6 +36,7 @@ public class DatetimeManager implements View.OnFocusChangeListener, DatePickerDi
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        this.editText.setText(day + "/" + month + "/" + year);
+        String date = day + "/" + month + "/" + year;
+        this.editText.setText(date);
     }
 }

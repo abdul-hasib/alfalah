@@ -4,20 +4,19 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-/**
- * Created by abdulh on 9/6/2015.
- */
+import org.apps.alfalahindia.activity.App;
+
 public class ConnectionDetector {
 
-    public static boolean isOnline(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) App.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
             return true;
         }
 
-        ToastUtil.toast(context, "There is not internet connection");
+        ToastUtil.toast("There is not internet connection");
 
         return false;
     }

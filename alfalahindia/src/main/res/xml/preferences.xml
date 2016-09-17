@@ -4,14 +4,14 @@
     <PreferenceCategory android:title="Server Info">
 
         <SwitchPreference
-            android:key="checkbox_work_online"
+            android:key="pref_work_online"
             android:summary="Work online with alfalahindia.org"
             android:title="Online" />
 
         <EditTextPreference
-            android:dependency="checkbox_work_online"
+            android:dependency="pref_work_online"
             android:dialogTitle="Server IP Address"
-            android:key="offline_server"
+            android:key="pref_offline_server"
             android:summary="IP Address fo the server to work offline"
             android:title="Offline Server" />
 

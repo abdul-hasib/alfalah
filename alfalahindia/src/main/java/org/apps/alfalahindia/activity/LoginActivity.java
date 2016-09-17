@@ -37,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
 
     ProgressBarHandler progressBarHandler;
 
-    Prefs prefs;
     EditText _usernameText;
     EditText _passwordText;
     Button _loginButton;
@@ -49,11 +48,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        prefs = new Prefs(getApplicationContext());
-
         // if member already logged in, redirect to home page
-        String authCode = prefs.getString(PrefKeys.USER_AUTH_TOKEN);
-        String username = prefs.getString(PrefKeys.MEMBER_USER_NAME);
+        String authCode = Prefs.getString(PrefKeys.USER_AUTH_TOKEN);
+        String username = Prefs.getString(PrefKeys.MEMBER_USER_NAME);
+
         if (authCode != null && username != null) {
             redirectToMemberHomePage(authCode, username);
         }
@@ -84,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         _skipLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                prefs.setString(PrefKeys.MEMBER_ROLE, UserRole.GUEST.toString());
+                Prefs.setString(PrefKeys.MEMBER_ROLE, UserRole.GUEST.toString());
                 Intent intent = new Intent(getApplicationContext(), GuestHomeActivity.class);
                 startActivity(intent);
                 finish();
@@ -133,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        ToastUtil.toast(getApplicationContext(), error.getMessage());
+                        ToastUtil.toast(error.getMessage());
                         progressBarHandler.hide();
                         onLoginFailed();
                     }
@@ -162,8 +160,8 @@ public class LoginActivity extends AppCompatActivity {
     private void redirectToMemberHomePage(String authCode, String username) {
         Intent intent = new Intent(this, MemberHomeActivity.class);
 
-        prefs.setString(PrefKeys.USER_AUTH_TOKEN, authCode);
-        prefs.setString(PrefKeys.MEMBER_USER_NAME, username);
+        Prefs.setString(PrefKeys.USER_AUTH_TOKEN, authCode);
+        Prefs.setString(PrefKeys.MEMBER_USER_NAME, username);
 
         startActivity(intent);
         this.finish();

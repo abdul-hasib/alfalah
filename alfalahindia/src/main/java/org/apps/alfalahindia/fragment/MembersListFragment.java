@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.PrefKeys;
+import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.adapters.MemberListAdapter;
@@ -51,7 +52,7 @@ public class MembersListFragment extends BaseFragment {
 
         setHasOptionsMenu(true);
 
-        authCode = prefs.getString(PrefKeys.USER_AUTH_TOKEN);
+        authCode = Prefs.getString(PrefKeys.USER_AUTH_TOKEN);
         requestData();
         return view;
     }
@@ -65,7 +66,7 @@ public class MembersListFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add_member:
-                ToastUtil.toast(getActivity().getApplicationContext(), "Let's add a member here");
+                ToastUtil.toast("Let's add a member here");
                 MemberCreateFragment fragment = new MemberCreateFragment();
                 getFragmentManager().beginTransaction()
                         .replace(((ViewGroup) getView().getParent()).getId(), fragment)
@@ -111,7 +112,7 @@ public class MembersListFragment extends BaseFragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        ToastUtil.toast(getActivity().getApplicationContext(), error.getMessage());
+                        ToastUtil.toast(error.getMessage());
                         progressBarHandler.hide();
                     }
                 }
@@ -124,7 +125,7 @@ public class MembersListFragment extends BaseFragment {
                 new MemberListAdapter.onSelectedEventCalender() {
                     @Override
                     public void onSelectedEventCalender(Member member, int type) {
-                        ToastUtil.toast(getActivity(), member.getName());
+                        ToastUtil.toast(member.getName());
                     }
                 }
         );
@@ -137,7 +138,7 @@ public class MembersListFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 System.out.println(membersListview.getItemAtPosition(position).getClass());
                 Member member = members.get(position);
-                ToastUtil.toast(getActivity(), "ALIF Id is:  " + member.getUsername().toUpperCase());
+                ToastUtil.toast("ALIF Id is:  " + member.getUsername().toUpperCase());
             }
         });
     }

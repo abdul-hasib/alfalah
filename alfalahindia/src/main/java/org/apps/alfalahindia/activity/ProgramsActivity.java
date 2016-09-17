@@ -1,10 +1,8 @@
 package org.apps.alfalahindia.activity;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.ImageView;
 
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.FileDownloader;
@@ -13,13 +11,6 @@ import org.apps.alfalahindia.res.Forms;
 
 
 public class ProgramsActivity extends ActionBarActivity {
-
-    // Progress dialog type (0 - for Horizontal progress bar)
-    public static final int progress_bar_type = 0;
-    ImageView membershipFileImage;
-    ImageView registrationFileImage;
-    // Progress Dialog
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +38,9 @@ public class ProgramsActivity extends ActionBarActivity {
         }
 
         try {
-            FileDownloader.download(getApplicationContext(), url,
-                    name, description);
+            FileDownloader.download(url, name, description);
         } catch (Exception e) {
-            ToastUtil.toast(getApplicationContext(), e.getLocalizedMessage());
+            ToastUtil.toast(e.getLocalizedMessage());
         }
     }
 
