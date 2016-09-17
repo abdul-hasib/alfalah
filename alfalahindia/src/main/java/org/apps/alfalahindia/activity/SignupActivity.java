@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private static final String TAG = "SignupActivity";
+    private static final String TAG = SignupActivity.class.getSimpleName();
 
     EditText _usernameText;
     EditText _nameText;
@@ -47,14 +47,14 @@ public class SignupActivity extends AppCompatActivity {
         _passwordText = (EditText) findViewById(R.id.input_password);
         _emailText = (EditText) findViewById(R.id.input_email);
         _mobileText = (EditText) findViewById(R.id.input_mobile);
-        _signupButton = (Button) findViewById(R.id.btn_signup);
+        _signupButton = (Button) findViewById(R.id.btn_register);
         _loginLink = (TextView) findViewById(R.id.link_login);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.fragment_member_register);
 
         init();
 

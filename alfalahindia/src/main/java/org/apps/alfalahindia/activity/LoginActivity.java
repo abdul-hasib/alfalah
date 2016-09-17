@@ -34,6 +34,7 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+    private static final int REQUEST_FORGOT_PASSWORD = 1;
 
     ProgressBarHandler progressBarHandler;
 
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     Button _loginButton;
     TextView _signupLink;
     TextView _skipLink;
+    TextView _forgotPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         _passwordText = (EditText) findViewById(R.id.input_password);
         _signupLink = (TextView) findViewById(R.id.link_signup);
         _skipLink = (TextView) findViewById(R.id.link_skip);
+        _forgotPassword = (TextView) findViewById(R.id.link_forgot_password);
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +89,14 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), GuestHomeActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        _forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                startActivityForResult(intent, REQUEST_FORGOT_PASSWORD);
             }
         });
     }
