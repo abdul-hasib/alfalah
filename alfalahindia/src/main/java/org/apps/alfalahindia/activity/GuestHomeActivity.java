@@ -8,8 +8,8 @@ import android.view.MenuItem;
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.enums.UserRole;
 import org.apps.alfalahindia.fragment.BaseFragment;
-import org.apps.alfalahindia.fragment.MembersListFragment;
 import org.apps.alfalahindia.fragment.ObjectivesFragment;
+import org.apps.alfalahindia.fragment.member.MembersListFragment;
 
 public class GuestHomeActivity extends BaseActivity {
 

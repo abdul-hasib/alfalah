@@ -1,17 +1,10 @@
-package org.apps.alfalahindia.fragment;
+package org.apps.alfalahindia.fragment.member;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Switch;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -22,7 +15,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.apps.alfalahindia.Managers.DatetimeManager;
-import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.ConnectionDetector;
 import org.apps.alfalahindia.Util.PrefKeys;
 import org.apps.alfalahindia.Util.Prefs;
@@ -39,7 +31,7 @@ import org.apps.alfalahindia.volley.ALIFStringRequest;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-public class MemberCreateFragment extends ManageMemberFragment {
+public class MemberCreateFragment extends MemberManageFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +42,7 @@ public class MemberCreateFragment extends ManageMemberFragment {
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatetimeManager datetimeManager = new DatetimeManager(dateText);
+                DatetimeManager datetimeManager = new DatetimeManager(dateText, getActivity());
                 datetimeManager.onFocusChange(view, true);
             }
         });

@@ -19,9 +19,9 @@ import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.fragment.DashboardFragment;
-import org.apps.alfalahindia.fragment.MembersListFragment;
 import org.apps.alfalahindia.fragment.ObjectivesFragment;
 import org.apps.alfalahindia.fragment.SettingsFragment;
+import org.apps.alfalahindia.fragment.member.MembersListFragment;
 import org.apps.alfalahindia.pojo.Member;
 import org.apps.alfalahindia.rest.ALIFResponse;
 import org.apps.alfalahindia.rest.JsonParser;
@@ -132,7 +132,6 @@ public class MemberHomeActivity extends BaseActivity {
 
         if (fragment != null) {
             ALIFFragmentManager fragmentManager = new ALIFFragmentManager(this);
-            String backStateName = fragment.getClass().getName();
             fragmentManager.replaceFragment(R.id.content_frame, fragment);
 
             if (activeMenuItem != null) {

@@ -1,4 +1,4 @@
-package org.apps.alfalahindia.fragment;
+package org.apps.alfalahindia.fragment.member;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,11 +18,13 @@ import com.android.volley.toolbox.Volley;
 
 import org.apps.alfalahindia.Managers.ALIFFragmentManager;
 import org.apps.alfalahindia.R;
+import org.apps.alfalahindia.Util.MemberUtil;
 import org.apps.alfalahindia.Util.PrefKeys;
 import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.adapters.MemberListAdapter;
+import org.apps.alfalahindia.fragment.BaseFragment;
 import org.apps.alfalahindia.pojo.Member;
 import org.apps.alfalahindia.rest.ALIFResponse;
 import org.apps.alfalahindia.rest.JsonParser;
@@ -61,6 +63,9 @@ public class MembersListFragment extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_member_list, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.menu_add_member);
+        menuItem.setEnabled(MemberUtil.isAdmin());
     }
 
     @Override

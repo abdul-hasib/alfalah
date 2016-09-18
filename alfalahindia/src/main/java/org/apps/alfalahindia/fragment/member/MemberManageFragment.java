@@ -1,12 +1,8 @@
-package org.apps.alfalahindia.fragment;
+package org.apps.alfalahindia.fragment.member;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,33 +10,12 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import org.apps.alfalahindia.Managers.DatetimeManager;
 import org.apps.alfalahindia.R;
-import org.apps.alfalahindia.Util.ConnectionDetector;
-import org.apps.alfalahindia.Util.PrefKeys;
-import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
-import org.apps.alfalahindia.Util.ToastUtil;
-import org.apps.alfalahindia.enums.UserRole;
-import org.apps.alfalahindia.pojo.Member;
-import org.apps.alfalahindia.rest.ALIFResponse;
-import org.apps.alfalahindia.rest.JsonParser;
-import org.apps.alfalahindia.rest.RequestMethod;
-import org.apps.alfalahindia.rest.RestURI;
-import org.apps.alfalahindia.volley.ALIFStringRequest;
+import org.apps.alfalahindia.fragment.BaseFragment;
 
-import java.lang.reflect.Type;
-import java.util.Map;
-
-public class ManageMemberFragment extends BaseFragment {
+public class MemberManageFragment extends BaseFragment {
 
     EditText nameText;
     EditText emailText;
@@ -77,7 +52,7 @@ public class ManageMemberFragment extends BaseFragment {
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatetimeManager datetimeManager = new DatetimeManager(dateText);
+                DatetimeManager datetimeManager = new DatetimeManager(dateText, getActivity());
                 datetimeManager.onFocusChange(view, true);
             }
         });

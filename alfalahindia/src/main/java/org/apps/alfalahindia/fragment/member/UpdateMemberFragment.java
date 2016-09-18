@@ -1,4 +1,4 @@
-package org.apps.alfalahindia.fragment;
+package org.apps.alfalahindia.fragment.member;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import org.apps.alfalahindia.Util.ToastUtil;
 /**
  * Created by bmi on 9/17/2016.
  */
-public class UpdateMemberFragment  extends ManageMemberFragment{
+public class UpdateMemberFragment extends MemberManageFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
