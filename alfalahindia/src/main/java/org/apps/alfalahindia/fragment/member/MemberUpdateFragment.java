@@ -84,7 +84,7 @@ public class MemberUpdateFragment extends MemberManageFragment {
             this.memberType.setChecked(false);
         }
 
-        if (MemberUtil.isMember()) {
+        if (!MemberUtil.isSuperAdmin()) {
             this.dateText.setEnabled(false);
             this.memberType.setEnabled(false);
 
