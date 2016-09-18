@@ -63,7 +63,6 @@ public class MemberListAdapter extends BaseAdapter {
     }
 
     public interface onSelectedEventCalender {
-        void onSelectedEventCalender(Member member, int type);
 
     }
 

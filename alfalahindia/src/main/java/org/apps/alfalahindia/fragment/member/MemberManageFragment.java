@@ -22,9 +22,12 @@ public class MemberManageFragment extends BaseFragment {
     EditText mobileText;
     EditText usernameText;
     EditText dateText;
+    EditText address;
+    EditText place;
+    EditText pincode;
     TextView title;
     Button addMemberBtn;
-    Switch role;
+    Switch memberType;
 
     ProgressBarHandler progressBarHandler = null;
 
@@ -45,8 +48,11 @@ public class MemberManageFragment extends BaseFragment {
         mobileText = (EditText) view.findViewById(R.id.input_mobile);
         usernameText = (EditText) view.findViewById(R.id.input_username);
         addMemberBtn = (Button) view.findViewById(R.id.btn_add_member);
-        role = (Switch) view.findViewById(R.id.switch_member_type);
+        memberType = (Switch) view.findViewById(R.id.switch_member_type);
         dateText = (EditText) view.findViewById(R.id.input_date);
+        address = (EditText) view.findViewById(R.id.input_address);
+        place = (EditText) view.findViewById(R.id.input_place);
+        pincode = (EditText) view.findViewById(R.id.input_pincode);
         title = (TextView) view.findViewById(R.id.register_member_title);
 
         dateText.setOnClickListener(new View.OnClickListener() {

@@ -129,10 +129,6 @@ public class MembersListFragment extends BaseFragment {
     protected void updateDisplay() {
         MemberListAdapter adapter = new MemberListAdapter(getActivity(), members,
                 new MemberListAdapter.onSelectedEventCalender() {
-                    @Override
-                    public void onSelectedEventCalender(Member member, int type) {
-                        ToastUtil.toast(member.getName());
-                    }
                 }
         );
 

@@ -10,6 +10,8 @@ import android.view.MenuItem;
 
 import org.apps.alfalahindia.Managers.ALIFFragmentManager;
 import org.apps.alfalahindia.R;
+import org.apps.alfalahindia.Util.PrefKeys;
+import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.enums.UserRole;
 
 public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -56,6 +58,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     }
 
     protected void prepareHomePage(UserRole userRole) {
+
+        // update the role in preferences
+        Prefs.setString(PrefKeys.MEMBER_ROLE, userRole.toString());
 
         navigationView.getMenu().setGroupVisible(R.id.group_member, false);
         navigationView.getMenu().setGroupVisible(R.id.group_admin, false);

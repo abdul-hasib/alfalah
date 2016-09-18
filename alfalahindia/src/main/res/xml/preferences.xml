@@ -4,15 +4,15 @@
     <PreferenceCategory android:title="Server Info">
 
         <SwitchPreference
-            android:key="pref_work_online"
-            android:summary="Work online with alfalahindia.org"
-            android:title="Online" />
+            android:key="pref_mode_offline"
+            android:summary="Work offline with local server"
+            android:title="Offline" />
 
         <EditTextPreference
-            android:dependency="pref_work_online"
-            android:dialogTitle="Server IP Address"
+            android:dependency="pref_mode_offline"
+            android:dialogTitle="Offline Server"
             android:key="pref_offline_server"
-            android:summary="IP Address fo the server to work offline"
+            android:summary="Offline server name or IP address"
             android:title="Offline Server" />
 
     </PreferenceCategory>

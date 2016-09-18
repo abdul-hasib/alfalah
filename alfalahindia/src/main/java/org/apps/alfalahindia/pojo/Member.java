@@ -2,10 +2,14 @@ package org.apps.alfalahindia.pojo;
 
 import android.graphics.Bitmap;
 
+import org.apps.alfalahindia.enums.MemberDesignation;
+import org.apps.alfalahindia.enums.MemberType;
 import org.apps.alfalahindia.enums.UserRole;
 import org.apps.alfalahindia.rest.JsonParser;
 
 public class Member {
+
+    String authCode;
 
     String username;
 
@@ -19,9 +23,15 @@ public class Member {
 
     String mobile;
 
-    String memberType;
+    MemberType memberType;
 
-    String authCode;
+    MemberDesignation designation;
+
+    String address;
+
+    String place;
+
+    String pincode;
 
     Bitmap photo;
 
@@ -73,6 +83,14 @@ public class Member {
         this.role = role;
     }
 
+    public MemberDesignation getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(MemberDesignation designation) {
+        this.designation = designation;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -89,12 +107,36 @@ public class Member {
         this.mobile = mobile;
     }
 
-    public String getMemberType() {
+    public MemberType getMemberType() {
         return memberType;
     }
 
-    public void setMemberType(String memberType) {
+    public void setMemberType(MemberType memberType) {
         this.memberType = memberType;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPincode() {
+        return pincode;
+    }
+
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     @Override

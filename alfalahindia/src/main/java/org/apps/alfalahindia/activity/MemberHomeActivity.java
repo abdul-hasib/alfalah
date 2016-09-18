@@ -45,6 +45,7 @@ public class MemberHomeActivity extends BaseActivity {
 
         String username = Prefs.getString(PrefKeys.MEMBER_USER_NAME);
         String authCode = Prefs.getString(PrefKeys.USER_AUTH_TOKEN);
+
         requestData(username, authCode);
     }
 

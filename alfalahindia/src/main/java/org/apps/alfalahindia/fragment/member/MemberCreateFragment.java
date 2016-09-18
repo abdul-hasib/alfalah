@@ -20,7 +20,7 @@ import org.apps.alfalahindia.Util.PrefKeys;
 import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
-import org.apps.alfalahindia.enums.UserRole;
+import org.apps.alfalahindia.enums.MemberType;
 import org.apps.alfalahindia.pojo.Member;
 import org.apps.alfalahindia.rest.ALIFResponse;
 import org.apps.alfalahindia.rest.JsonParser;
@@ -37,7 +37,6 @@ public class MemberCreateFragment extends MemberManageFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = super.onCreateView(inflater, container, savedInstanceState);
-
 
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +69,8 @@ public class MemberCreateFragment extends MemberManageFragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        ToastUtil.toast(response);
+                        ALIFResponse alifResponse = new Gson().fromJson(response, ALIFResponse.class);
+                        ToastUtil.toast(alifResponse.getMessage());
                         progressBarHandler.hide();
                         getActivity().getFragmentManager().popBackStack();
                     }
@@ -79,8 +79,8 @@ public class MemberCreateFragment extends MemberManageFragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         if (error != null) {
-                            ALIFResponse ALIFResponse = new Gson().fromJson(error.getMessage(), ALIFResponse.class);
-                            ToastUtil.toast(ALIFResponse.getMessage());
+                            ALIFResponse alifResponse = new Gson().fromJson(error.getMessage(), ALIFResponse.class);
+                            ToastUtil.toast(alifResponse.getMessage());
                         }
                         progressBarHandler.hide();
                     }
@@ -89,16 +89,19 @@ public class MemberCreateFragment extends MemberManageFragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Member member = new Member();
+                member.setAuthCode(Prefs.getString(PrefKeys.USER_AUTH_TOKEN));
+                member.setUsername(usernameText.getText().toString());
                 member.setName(nameText.getText().toString());
                 member.setEmail(emailText.getText().toString());
                 member.setMobile(mobileText.getText().toString());
-                member.setUsername(usernameText.getText().toString());
-                member.setAuthCode(Prefs.getString(PrefKeys.USER_AUTH_TOKEN));
+                member.setAddress(address.getText().toString());
+                member.setPlace(place.getText().toString());
+                member.setPincode(pincode.getText().toString());
 
-                if (role.isChecked()) {
-                    member.setRole(UserRole.ADMIN);
+                if (memberType.isChecked()) {
+                    member.setMemberType(MemberType.LIFETIME);
                 } else {
-                    member.setRole(UserRole.GUEST);
+                    member.setMemberType(MemberType.REGULAR);
                 }
 
                 Type type = new TypeToken<Map<String, String>>() {
