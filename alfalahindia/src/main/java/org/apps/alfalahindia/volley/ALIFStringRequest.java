@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.rest.ALIFRestResponse;
 import org.apps.alfalahindia.rest.JsonParser;
 import org.apps.alfalahindia.rest.RequestMethod;
@@ -31,8 +32,14 @@ public class ALIFStringRequest extends StringRequest {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            ALIFRestResponse alifRestResponse = JsonParser.fromJson(error, ALIFRestResponse.class);
-            volleyError = new VolleyError(alifRestResponse.getResponse().toString());
+            try {
+                ALIFRestResponse alifRestResponse = JsonParser.fromJson(error, ALIFRestResponse.class);
+                volleyError = new VolleyError(alifRestResponse.getResponse().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+                ToastUtil.toast("Unknown exception occurred: " + e.getMessage());
+            }
+
         }
         return volleyError;
     }
