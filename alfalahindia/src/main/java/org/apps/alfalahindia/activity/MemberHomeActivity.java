@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -14,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.apps.alfalahindia.Managers.ALIFFragmentManager;
 import org.apps.alfalahindia.R;
+import org.apps.alfalahindia.Util.MemberUtil;
 import org.apps.alfalahindia.Util.PrefKeys;
 import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
@@ -21,6 +25,7 @@ import org.apps.alfalahindia.Util.ToastUtil;
 import org.apps.alfalahindia.fragment.DashboardFragment;
 import org.apps.alfalahindia.fragment.ObjectivesFragment;
 import org.apps.alfalahindia.fragment.SettingsFragment;
+import org.apps.alfalahindia.fragment.member.MemberUpdateFragment;
 import org.apps.alfalahindia.fragment.member.MembersListFragment;
 import org.apps.alfalahindia.pojo.Member;
 import org.apps.alfalahindia.rest.ALIFResponse;
@@ -36,6 +41,9 @@ public class MemberHomeActivity extends BaseActivity {
 
     ProgressBarHandler progressBarHandler = null;
     Member member;
+    TextView _memberNameText;
+    TextView _memberEmailText;
+    ImageView _memberPhoto;
     private String TAG = MemberHomeActivity.class.getSimpleName();
     private MenuItem activeMenuItem;
 
@@ -45,6 +53,24 @@ public class MemberHomeActivity extends BaseActivity {
 
         String username = Prefs.getString(PrefKeys.MEMBER_USER_NAME);
         String authCode = Prefs.getString(PrefKeys.USER_AUTH_TOKEN);
+
+        View headerView = navigationView.getHeaderView(0);
+
+        _memberNameText = (TextView) headerView.findViewById(R.id.header_profile_name);
+        _memberEmailText = (TextView) headerView.findViewById(R.id.header_profile_email);
+        _memberPhoto = (ImageView) headerView.findViewById(R.id.header_profile_photo);
+
+        _memberPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (MemberUtil.isGuest()) {
+                    return;
+                }
+                fragmentManager.pushFragment(R.id.content_frame, MemberUpdateFragment.newInstance(member));
+                closeNavigationDrawer();
+            }
+        });
 
         requestData(username, authCode);
     }
@@ -66,7 +92,12 @@ public class MemberHomeActivity extends BaseActivity {
                         ALIFResponse alifResponse = JsonParser.fromJson(response, ALIFResponse.class);
                         member = JsonParser.fromJson(JsonParser.toJson(alifResponse.getData()), Member.class);
                         progressBarHandler.hide();
+
+                        _memberNameText.setText(member.getName());
+                        _memberEmailText.setText(member.getEmail());
+
                         prepareHomePage(member.getRole());
+
                         activeMenuItem = navigationView.getMenu().getItem(0);
                         activeMenuItem.setChecked(true);
 
@@ -142,8 +173,12 @@ public class MemberHomeActivity extends BaseActivity {
             item.setChecked(true);
         }
 
+        closeNavigationDrawer();
+        return true;
+    }
+
+    private void closeNavigationDrawer() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }

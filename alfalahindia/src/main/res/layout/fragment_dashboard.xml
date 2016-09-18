@@ -36,13 +36,13 @@
             android:paddingBottom="24dp">
 
             <ImageView
-                android:id="@+id/drop_down_option_menu"
+                android:id="@+id/dashboard_edit_profile"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:src="@mipmap/ic_more" />
+                android:src="@android:drawable/ic_menu_edit" />
 
             <TextView
                 android:id="@+id/user_profile_name"
