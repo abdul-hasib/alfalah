@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
+import org.apps.alfalahindia.Managers.ALIFFragmentManager;
 import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.PrefKeys;
 import org.apps.alfalahindia.Util.Prefs;
@@ -138,6 +139,11 @@ public class MembersListFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 System.out.println(membersListview.getItemAtPosition(position).getClass());
                 Member member = members.get(position);
+
+                ALIFFragmentManager alifFragmentManager = new ALIFFragmentManager(getActivity());
+                System.out.println("Update member");
+                alifFragmentManager.replaceFragment(R.id.content_frame, new UpdateMemberFragment());
+
                 ToastUtil.toast("ALIF Id is:  " + member.getUsername().toUpperCase());
             }
         });
