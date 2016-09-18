@@ -2,10 +2,14 @@ package org.apps.alfalahindia.pojo;
 
 import android.graphics.Bitmap;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.apps.alfalahindia.enums.MemberDesignation;
 import org.apps.alfalahindia.enums.MemberType;
 import org.apps.alfalahindia.enums.UserRole;
 import org.apps.alfalahindia.rest.JsonParser;
+
+import java.util.Date;
 
 public class Member {
 
@@ -34,6 +38,17 @@ public class Member {
     String pincode;
 
     Bitmap photo;
+
+    @SerializedName("doj")
+    String joiningDate;
+
+    public String getJoiningDate() {
+        return joiningDate;
+    }
+
+    public void setJoiningDate(String joiningDate) {
+        this.joiningDate = joiningDate;
+    }
 
     public Bitmap getPhoto() {
         return photo;

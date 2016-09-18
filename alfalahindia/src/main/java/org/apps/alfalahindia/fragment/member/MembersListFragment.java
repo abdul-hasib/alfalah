@@ -138,14 +138,27 @@ public class MembersListFragment extends BaseFragment {
         membersListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
                 System.out.println(membersListview.getItemAtPosition(position).getClass());
+
+
+            }
+        });
+
+        membersListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if(!MemberUtil.isAdmin()){
+                    return false;
+                }
                 Member member = members.get(position);
 
                 ALIFFragmentManager alifFragmentManager = new ALIFFragmentManager(getActivity());
-                System.out.println("Update member");
-                alifFragmentManager.replaceFragment(R.id.content_frame, new UpdateMemberFragment());
+
+                alifFragmentManager.pushFragment(R.id.content_frame, MemberUpdateFragment.newInstance(member));
 
                 ToastUtil.toast("ALIF Id is:  " + member.getUsername().toUpperCase());
+                return true;
             }
         });
     }

@@ -94,9 +94,9 @@ public class MemberCreateFragment extends MemberManageFragment {
                 member.setName(nameText.getText().toString());
                 member.setEmail(emailText.getText().toString());
                 member.setMobile(mobileText.getText().toString());
-                member.setAddress(address.getText().toString());
-                member.setPlace(place.getText().toString());
-                member.setPincode(pincode.getText().toString());
+                member.setAddress(addressText.getText().toString());
+                member.setPlace(placeText.getText().toString());
+                member.setPincode(pincodeText.getText().toString());
 
                 if (memberType.isChecked()) {
                     member.setMemberType(MemberType.LIFETIME);

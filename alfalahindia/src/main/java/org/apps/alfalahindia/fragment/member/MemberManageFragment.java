@@ -22,9 +22,9 @@ public class MemberManageFragment extends BaseFragment {
     EditText mobileText;
     EditText usernameText;
     EditText dateText;
-    EditText address;
-    EditText place;
-    EditText pincode;
+    EditText addressText;
+    EditText placeText;
+    EditText pincodeText;
     TextView title;
     Button addMemberBtn;
     Switch memberType;
@@ -50,9 +50,9 @@ public class MemberManageFragment extends BaseFragment {
         addMemberBtn = (Button) view.findViewById(R.id.btn_add_member);
         memberType = (Switch) view.findViewById(R.id.switch_member_type);
         dateText = (EditText) view.findViewById(R.id.input_date);
-        address = (EditText) view.findViewById(R.id.input_address);
-        place = (EditText) view.findViewById(R.id.input_place);
-        pincode = (EditText) view.findViewById(R.id.input_pincode);
+        addressText = (EditText) view.findViewById(R.id.input_address);
+        placeText = (EditText) view.findViewById(R.id.input_place);
+        pincodeText = (EditText) view.findViewById(R.id.input_pincode);
         title = (TextView) view.findViewById(R.id.register_member_title);
 
         dateText.setOnClickListener(new View.OnClickListener() {

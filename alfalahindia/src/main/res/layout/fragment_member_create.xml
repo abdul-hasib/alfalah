@@ -141,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:drawableTint="#FF4081"
                         android:hint="Pincode"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -184,17 +184,6 @@
                     android:textStyle="italic" />
 
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/link_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/linearLayout"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:elevation="4dp"
-                android:paddingTop="5dp"
-                android:text="Already a member? Login" />
 
 
         </RelativeLayout>
