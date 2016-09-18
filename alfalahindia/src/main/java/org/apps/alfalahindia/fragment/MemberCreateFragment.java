@@ -39,42 +39,18 @@ import org.apps.alfalahindia.volley.ALIFStringRequest;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-public class MemberCreateFragment extends BaseFragment {
-
-    EditText nameText;
-    EditText emailText;
-    EditText mobileText;
-    EditText usernameText;
-    EditText dateText;
-    Button addMemberBtn;
-    Switch memberType;
-
-    ProgressBarHandler progressBarHandler = null;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
+public class MemberCreateFragment extends ManageMemberFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_member_create, container, false);
+        final View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        nameText = (EditText) view.findViewById(R.id.input_name);
-        emailText = (EditText) view.findViewById(R.id.input_email);
-        mobileText = (EditText) view.findViewById(R.id.input_mobile);
-        usernameText = (EditText) view.findViewById(R.id.input_username);
-        addMemberBtn = (Button) view.findViewById(R.id.btn_add_member);
-        memberType = (Switch) view.findViewById(R.id.switch_member_type);
-        dateText = (EditText) view.findViewById(R.id.input_date);
 
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatetimeManager datetimeManager = new DatetimeManager(dateText, getActivity());
+                DatetimeManager datetimeManager = new DatetimeManager(dateText);
                 datetimeManager.onFocusChange(view, true);
             }
         });
@@ -91,68 +67,6 @@ public class MemberCreateFragment extends BaseFragment {
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // inflater.inflate(R.menu.menu_member_save, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_save_member:
-                if (validateParameters() && ConnectionDetector.isOnline()) {
-                    createMember();
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private boolean validateParameters() {
-
-        boolean valid = true;
-
-        String name = nameText.getText().toString();
-        String email = emailText.getText().toString();
-        String mobile = mobileText.getText().toString();
-        String username = usernameText.getText().toString();
-
-        if (name.isEmpty()) {
-            nameText.setError("Name can not be blank");
-            valid = false;
-        } else {
-            nameText.setError(null);
-        }
-
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailText.setError("Email is not valid");
-            valid = false;
-        } else {
-            nameText.setError(null);
-        }
-
-        if (mobile.isEmpty() || mobile.length() < 10 || mobile.length() > 10) {
-            mobileText.setError("Mobile number is not valid (enter without country code");
-            valid = false;
-        } else {
-            mobileText.setError(null);
-        }
-
-        if (username.isEmpty()) {
-            usernameText.setError("ALIF Id can not be blank");
-            valid = false;
-        } else {
-            usernameText.setError(null);
-        }
-
-        return valid;
-    }
 
     private void createMember() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
@@ -188,8 +102,12 @@ public class MemberCreateFragment extends BaseFragment {
                 member.setMobile(mobileText.getText().toString());
                 member.setUsername(usernameText.getText().toString());
                 member.setAuthCode(Prefs.getString(PrefKeys.USER_AUTH_TOKEN));
-                member.setRole(UserRole.GUEST);
-                member.setMemberType(memberType.isActivated() ? "LIFETIME" : "REGULAR");
+
+                if (role.isChecked()) {
+                    member.setRole(UserRole.ADMIN);
+                } else {
+                    member.setRole(UserRole.GUEST);
+                }
 
                 Type type = new TypeToken<Map<String, String>>() {
                 }.getType();
