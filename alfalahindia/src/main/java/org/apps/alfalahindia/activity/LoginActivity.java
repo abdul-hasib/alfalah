@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
         final String username = _usernameText.getText().toString();
         final String password = _passwordText.getText().toString();
 
-        String uri = RestURI.getUri("/member/login/");
+        String uri = RestURI.getUri("/auth/login/");
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         progressBarHandler = new ProgressBarHandler(this);
