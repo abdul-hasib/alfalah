@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="76dp"
+                android:layout_marginTop="75dp"
                 android:text="AlFalah India"
                 android:textColor="#fff"
                 android:textSize="24sp"
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/user_profile_name"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 android:text="alif@alfalahindia.org"
                 android:textColor="#fff"
                 android:textSize="14sp" />
@@ -88,7 +88,7 @@
                     android:clickable="true"
                     android:elevation="4dp"
                     android:minWidth="100dp"
-                    android:padding="20dp"
+                    android:padding="10dp"
                     android:text="Mobile" />
 
                 <TextView
@@ -99,7 +99,7 @@
                     android:background="#fff"
                     android:clickable="true"
                     android:elevation="4dp"
-                    android:padding="20dp"
+                    android:padding="10dp"
                     android:text="Mobile" />
 
             </LinearLayout>
@@ -117,22 +117,21 @@
                     android:clickable="true"
                     android:elevation="4dp"
                     android:minWidth="100dp"
-                    android:padding="20dp"
+                    android:padding="10dp"
                     android:text="Role" />
 
                 <TextView
-                    android:id="@+id/user_profile_role"
+                    android:id="@+id/user_profile_designation"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="#fff"
                     android:clickable="true"
                     android:elevation="4dp"
-                    android:padding="20dp"
-                    android:text="Role" />
+                    android:padding="10dp"
+                    android:text="Designation" />
 
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -146,7 +145,7 @@
                     android:clickable="true"
                     android:elevation="4dp"
                     android:minWidth="100dp"
-                    android:padding="20dp"
+                    android:padding="10dp"
                     android:text="ALIF ID" />
 
                 <TextView
@@ -157,8 +156,64 @@
                     android:background="#fff"
                     android:clickable="true"
                     android:elevation="4dp"
-                    android:padding="20dp"
+                    android:padding="10dp"
                     android:text="ALIF ID" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="#fff"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:minWidth="100dp"
+                    android:padding="10dp"
+                    android:text="Member" />
+
+                <TextView
+                    android:id="@+id/user_profile_member_type"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="#fff"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:padding="10dp"
+                    android:text="Member Type" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="#fff"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:minWidth="100dp"
+                    android:padding="10dp"
+                    android:text="Place" />
+
+                <TextView
+                    android:id="@+id/user_profile_place"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="#fff"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:padding="10dp"
+                    android:text="Place" />
 
             </LinearLayout>
 

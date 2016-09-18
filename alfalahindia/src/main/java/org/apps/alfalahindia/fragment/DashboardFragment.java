@@ -16,7 +16,14 @@ public class DashboardFragment extends BaseFragment {
     private static String FRAGMENT_ARGUMENT = "FRAGMENT_ARGUMENT";
 
     LinearLayout dashboardLayout;
-    TextView userProfileName, userProfileEmail, userProfileRole, userProfileUsername, userProfileMobile;
+    TextView _nameText;
+    TextView _emailText;
+    TextView _designationText;
+    TextView _usernameText;
+    TextView _mobileText;
+    TextView _memberTypeText;
+    TextView _placeText;
+
     Member member;
 
     public static DashboardFragment newInstance(Member member) {
@@ -41,18 +48,22 @@ public class DashboardFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         dashboardLayout = (LinearLayout) view.findViewById(R.id.dashBoardLayout);
 
-        userProfileName = (TextView) view.findViewById(R.id.user_profile_name);
-        userProfileEmail = (TextView) view.findViewById(R.id.user_profile_email);
-        userProfileRole = (TextView) view.findViewById(R.id.user_profile_role);
-        userProfileUsername = (TextView) view.findViewById(R.id.user_profile_username);
-        userProfileMobile = (TextView) view.findViewById(R.id.user_profile_mobile);
+        _nameText = (TextView) view.findViewById(R.id.user_profile_name);
+        _emailText = (TextView) view.findViewById(R.id.user_profile_email);
+        _designationText = (TextView) view.findViewById(R.id.user_profile_designation);
+        _usernameText = (TextView) view.findViewById(R.id.user_profile_username);
+        _mobileText = (TextView) view.findViewById(R.id.user_profile_mobile);
+        _memberTypeText = (TextView) view.findViewById(R.id.user_profile_member_type);
+        _placeText = (TextView) view.findViewById(R.id.user_profile_place);
 
-        userProfileName.setText(member.getName());
-        userProfileEmail.setText(member.getEmail());
-        userProfileRole.setText(member.getRole().toString());
-        userProfileUsername.setText(member.getUsername());
-        userProfileMobile.setText(member.getMobile());
+        _nameText.setText(member.getName());
+        _emailText.setText(member.getEmail());
+        _designationText.setText(member.getDesignation().getValue());
+        _usernameText.setText(member.getUsername());
+        _mobileText.setText(member.getMobile());
+        _memberTypeText.setText(member.getMemberType().toString());
+        _placeText.setText(member.getPlace());
+
         return view;
     }
-
 }
