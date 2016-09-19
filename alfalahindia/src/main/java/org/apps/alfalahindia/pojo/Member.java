@@ -9,8 +9,6 @@ import org.apps.alfalahindia.enums.MemberType;
 import org.apps.alfalahindia.enums.UserRole;
 import org.apps.alfalahindia.rest.JsonParser;
 
-import java.util.Date;
-
 public class Member {
 
     String authCode;
@@ -27,7 +25,7 @@ public class Member {
 
     String mobile;
 
-    MemberType memberType;
+    MemberType membership;
 
     MemberDesignation designation;
 
@@ -122,12 +120,12 @@ public class Member {
         this.mobile = mobile;
     }
 
-    public MemberType getMemberType() {
-        return memberType;
+    public MemberType getMembership() {
+        return membership;
     }
 
-    public void setMemberType(MemberType memberType) {
-        this.memberType = memberType;
+    public void setMembership(MemberType membership) {
+        this.membership = membership;
     }
 
     public String getAddress() {

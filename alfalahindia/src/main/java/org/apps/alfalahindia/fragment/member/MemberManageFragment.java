@@ -12,8 +12,13 @@ import android.widget.TextView;
 
 import org.apps.alfalahindia.Managers.DatetimeManager;
 import org.apps.alfalahindia.R;
+import org.apps.alfalahindia.Util.MemberUtil;
+import org.apps.alfalahindia.Util.PrefKeys;
+import org.apps.alfalahindia.Util.Prefs;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
+import org.apps.alfalahindia.enums.MemberType;
 import org.apps.alfalahindia.fragment.BaseFragment;
+import org.apps.alfalahindia.pojo.Member;
 
 public class MemberManageFragment extends BaseFragment {
 
@@ -25,6 +30,7 @@ public class MemberManageFragment extends BaseFragment {
     EditText addressText;
     EditText placeText;
     EditText pincodeText;
+    EditText dojText;
     TextView title;
     Button addMemberBtn;
     Switch memberType;
@@ -54,6 +60,7 @@ public class MemberManageFragment extends BaseFragment {
         placeText = (EditText) view.findViewById(R.id.input_place);
         pincodeText = (EditText) view.findViewById(R.id.input_pincode);
         title = (TextView) view.findViewById(R.id.register_member_title);
+
 
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,4 +113,53 @@ public class MemberManageFragment extends BaseFragment {
         return valid;
     }
 
+    public Member getMemberDetails(){
+
+        Member member = new Member();
+
+        member.setAuthCode(Prefs.getString(PrefKeys.USER_AUTH_TOKEN));
+        member.setUsername(usernameText.getText().toString());
+        member.setName(nameText.getText().toString());
+        member.setEmail(emailText.getText().toString());
+        member.setMobile(mobileText.getText().toString());
+        member.setAddress(addressText.getText().toString());
+        member.setPlace(placeText.getText().toString());
+        member.setPincode(pincodeText.getText().toString());
+        member.setJoiningDate(dateText.getText().toString());
+
+        if (memberType.isChecked()) {
+            member.setMembership(MemberType.LIFETIME);
+        } else {
+            member.setMembership(MemberType.REGULAR);
+        }
+
+        return member;
+    }
+
+    public void loadMemberDetailsToUI(Member member) {
+
+        usernameText.setText(member.getUsername());
+        nameText.setText(member.getName());
+        mobileText.setText(member.getMobile());
+        emailText.setText(member.getEmail());
+        addressText.setText(member.getAddress());
+        pincodeText.setText(member.getPincode());
+        placeText.setText(member.getPlace());
+        dateText.setText(member.getJoiningDate());
+        dateText.setEnabled(true);
+        memberType.setEnabled(true);
+
+        if (member.getMembership() == MemberType.LIFETIME) {
+            memberType.setChecked(true);
+        } else {
+            this.memberType.setChecked(false);
+        }
+
+        if (!MemberUtil.isSuperAdmin()) {
+            dateText.setEnabled(false);
+            memberType.setEnabled(false);
+
+        }
+
+    }
 }

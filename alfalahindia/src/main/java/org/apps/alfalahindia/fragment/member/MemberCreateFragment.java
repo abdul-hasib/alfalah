@@ -88,28 +88,13 @@ public class MemberCreateFragment extends MemberManageFragment {
         ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Member member = new Member();
-                member.setAuthCode(Prefs.getString(PrefKeys.USER_AUTH_TOKEN));
-                member.setUsername(usernameText.getText().toString());
-                member.setName(nameText.getText().toString());
-                member.setEmail(emailText.getText().toString());
-                member.setMobile(mobileText.getText().toString());
-                member.setAddress(addressText.getText().toString());
-                member.setPlace(placeText.getText().toString());
-                member.setPincode(pincodeText.getText().toString());
-
-                if (memberType.isChecked()) {
-                    member.setMemberType(MemberType.LIFETIME);
-                } else {
-                    member.setMemberType(MemberType.REGULAR);
-                }
 
                 Type type = new TypeToken<Map<String, String>>() {
                 }.getType();
 
                 Gson gson = new Gson();
-                System.out.println(gson.fromJson(JsonParser.toJson(member), type).toString());
-                return gson.fromJson(JsonParser.toJson(member), type);
+                System.out.println(gson.fromJson(JsonParser.toJson(getMemberDetails()), type).toString());
+                return gson.fromJson(JsonParser.toJson(getMemberDetails()), type);
             }
         };
 
