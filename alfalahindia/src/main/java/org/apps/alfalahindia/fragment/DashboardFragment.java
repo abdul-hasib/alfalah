@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.apps.alfalahindia.Managers.ALIFFragmentManager;
 import org.apps.alfalahindia.R;
+import org.apps.alfalahindia.fragment.member.MemberUpdateFragment;
 import org.apps.alfalahindia.pojo.Member;
 import org.apps.alfalahindia.rest.JsonParser;
 
@@ -23,6 +26,7 @@ public class DashboardFragment extends BaseFragment {
     TextView _mobileText;
     TextView _memberTypeText;
     TextView _placeText;
+    ImageView _editProfileImage;
 
     Member member;
 
@@ -55,15 +59,28 @@ public class DashboardFragment extends BaseFragment {
         _mobileText = (TextView) view.findViewById(R.id.user_profile_mobile);
         _memberTypeText = (TextView) view.findViewById(R.id.user_profile_member_type);
         _placeText = (TextView) view.findViewById(R.id.user_profile_place);
+        _editProfileImage = (ImageView) view.findViewById(R.id.dashboard_edit_profile);
 
         _nameText.setText(member.getName());
         _emailText.setText(member.getEmail());
         _designationText.setText(member.getDesignation().getValue());
         _usernameText.setText(member.getUsername());
         _mobileText.setText(member.getMobile());
-        _memberTypeText.setText(member.getMemberType().toString());
+        _memberTypeText.setText(member.getMembership().toString());
         _placeText.setText(member.getPlace());
 
+        _editProfileImage.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                ALIFFragmentManager alifFragmentManager = new ALIFFragmentManager(getActivity());
+
+                alifFragmentManager.pushFragment(R.id.content_frame, MemberUpdateFragment.newInstance(member));
+
+            }
+        });
         return view;
     }
+
+
 }
