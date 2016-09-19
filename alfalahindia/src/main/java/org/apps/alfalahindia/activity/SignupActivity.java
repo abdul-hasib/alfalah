@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -20,11 +19,11 @@ import org.apps.alfalahindia.R;
 import org.apps.alfalahindia.Util.IntentKeys;
 import org.apps.alfalahindia.Util.ProgressBarHandler;
 import org.apps.alfalahindia.Util.ToastUtil;
-import org.apps.alfalahindia.rest.ALIFResponse;
-import org.apps.alfalahindia.rest.JsonParser;
 import org.apps.alfalahindia.rest.RequestMethod;
 import org.apps.alfalahindia.rest.RestURI;
 import org.apps.alfalahindia.volley.ALIFStringRequest;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +37,7 @@ public class SignupActivity extends AppCompatActivity {
     EditText _emailText;
     EditText _mobileText;
     EditText _passwordText;
-    Button _signupButton;
+    Button _registerBtn;
     TextView _loginLink;
 
     private void init() {
@@ -47,7 +46,7 @@ public class SignupActivity extends AppCompatActivity {
         _passwordText = (EditText) findViewById(R.id.input_password);
         _emailText = (EditText) findViewById(R.id.input_email);
         _mobileText = (EditText) findViewById(R.id.input_mobile);
-        _signupButton = (Button) findViewById(R.id.btn_register);
+        _registerBtn = (Button) findViewById(R.id.btn_register);
         _loginLink = (TextView) findViewById(R.id.link_login);
     }
 
@@ -58,7 +57,7 @@ public class SignupActivity extends AppCompatActivity {
 
         init();
 
-        _signupButton.setOnClickListener(new View.OnClickListener() {
+        _registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signup();
@@ -82,7 +81,7 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-        _signupButton.setEnabled(false);
+        _registerBtn.setEnabled(false);
 
         String uri = RestURI.getUri("/member/signup/");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -92,8 +91,8 @@ public class SignupActivity extends AppCompatActivity {
         ALIFStringRequest request = new ALIFStringRequest(RequestMethod.POST, uri,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String output) {
-                        ALIFResponse response = JsonParser.fromJson(output, ALIFResponse.class);
+                    public void onResponse(String response) {
+                        Log.d(TAG, response);
                         progressBarHandler.hide();
                         onSignupSuccess(response);
                     }
@@ -129,18 +128,25 @@ public class SignupActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    public void onSignupSuccess(ALIFResponse response) {
-        _signupButton.setEnabled(true);
+    public void onSignupSuccess(String response) {
+        _registerBtn.setEnabled(true);
         Intent intent = new Intent();
-        intent.putExtra(IntentKeys.AUTH_CODE, response.getData().toString());
-        intent.putExtra(IntentKeys.USERNAME, _usernameText.getText());
+        String authCode = null;
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            authCode = jsonObject.getString("data");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        intent.putExtra(IntentKeys.AUTH_CODE, authCode);
+        intent.putExtra(IntentKeys.USERNAME, _usernameText.getText().toString());
         setResult(RESULT_OK, intent);
         this.finish();
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getApplicationContext(), "Signup failed", Toast.LENGTH_LONG).show();
-        _signupButton.setEnabled(true);
+        ToastUtil.toast("Signup failed");
+        _registerBtn.setEnabled(true);
     }
 
     public boolean validate() {

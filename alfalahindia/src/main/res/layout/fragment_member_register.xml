@@ -16,20 +16,20 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
             android:text="Register Member"
             android:textColor="#fff"
             android:textSize="26sp"
-            android:textStyle="bold"
-            android:gravity="center_horizontal"/>
+            android:textStyle="bold" />
         <RelativeLayout
             android:id="@+id/relative_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/register_member_title"
-            android:layout_marginTop="50dp"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_centerInParent="true"
+            android:layout_marginTop="50dp"
             android:background="#fff"
             android:orientation="vertical"
             android:padding="20dp">
@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/input_alif_id"
+                        android:id="@+id/input_username"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:drawableTint="#FF4081"
@@ -60,12 +60,12 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/input_member_name"
+                        android:id="@+id/input_name"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:drawableTint="#FF4081"
                         android:hint="Member Name"
-                        android:inputType="textCapCharacters"
+                        android:inputType="textPersonName"
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:drawableTint="#FF4081"
                         android:hint="Mobile"
-                        android:inputType="textCapCharacters"
+                        android:inputType="number"
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -93,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:drawableTint="#FF4081"
                         android:hint="Email"
-                        android:inputType="textCapCharacters"
+                        android:inputType="textEmailAddress"
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -111,30 +111,16 @@
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/input_confirm_password"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableTint="#FF4081"
-                        android:hint="Confirm Password"
-                        android:inputType="textPassword"
-                        android:singleLine="true" />
-                </android.support.design.widget.TextInputLayout>
-
                 <Button
                     android:id="@+id/btn_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Register"
-                    android:textStyle="italic"
+                    android:layout_margin="22dp"
                     android:background="#d67601"
+                    android:text="Register"
                     android:textColor="#fff"
                     android:textSize="18sp"
-                    android:layout_margin="22dp"/>
+                    android:textStyle="italic" />
 
             </LinearLayout>
 
@@ -142,12 +128,12 @@
                 android:id="@+id/link_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:elevation="4dp"
                 android:paddingTop="5dp"
-                android:text="Already a member? Login"
-                android:layout_below="@+id/linearLayout"
-                android:layout_centerHorizontal="true" />
+                android:text="Already a member? Login" />
 
 
         </RelativeLayout>
