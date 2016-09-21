@@ -112,8 +112,8 @@
                         android:layout_height="wrap_content"
                         android:drawableTint="#FF4081"
                         android:hint="Address"
-                        android:inputType="textMultiLine"
-                        android:lineSpacingMultiplier="@integer/abc_config_activityDefaultDur"
+                        android:inputType="text"
+                        android:singleLine="true"
                         />
                 </android.support.design.widget.TextInputLayout>
 

@@ -9,7 +9,7 @@
 
     <item
         android:id="@+id/menu_refresh"
-        android:icon="@drawable/ic_sync"
+        android:icon="@mipmap/ic_refresh"
         android:title="Refresh"
         app:showAsAction="ifRoom" />
 </menu>

@@ -74,8 +74,6 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void signup() {
-        Log.d(TAG, "Signup");
-
         if (!validate()) {
             onSignupFailed();
             return;
@@ -83,7 +81,7 @@ public class SignupActivity extends AppCompatActivity {
 
         _registerBtn.setEnabled(false);
 
-        String uri = RestURI.getUri("/member/signup/");
+        String uri = RestURI.getSignupURI();
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         final ProgressBarHandler progressBarHandler = new ProgressBarHandler(this);
         progressBarHandler.show();
@@ -145,7 +143,6 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onSignupFailed() {
-        ToastUtil.toast("Signup failed");
         _registerBtn.setEnabled(true);
     }
 

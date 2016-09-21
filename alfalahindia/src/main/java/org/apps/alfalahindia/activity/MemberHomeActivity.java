@@ -55,7 +55,6 @@ public class MemberHomeActivity extends BaseActivity {
         String authCode = Prefs.getString(PrefKeys.USER_AUTH_TOKEN);
 
         View headerView = navigationView.getHeaderView(0);
-
         _memberNameText = (TextView) headerView.findViewById(R.id.header_profile_name);
         _memberEmailText = (TextView) headerView.findViewById(R.id.header_profile_email);
         _memberPhoto = (ImageView) headerView.findViewById(R.id.header_profile_photo);

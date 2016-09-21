@@ -12,6 +12,10 @@ public class RestURI {
     private static final String SERVER_BASE_URI = "http://alfalahindia.org/rest/v1/api";
     private static final String LOCAL_BASE_URI = "http://?/alifrest/v1/api";
 
+    public static String getSignupURI() {
+        return RestURI.getUri("/member/signup/");
+    }
+
     public static String getUri(String path, Map<String, String> params) {
         StringBuilder sb = new StringBuilder(getBaseURI());
         sb.append(path);
@@ -38,18 +42,14 @@ public class RestURI {
     }
 
     private static String getBaseURI() {
-
         if (Prefs.getBoolean(PrefKeys.OFFLINE_MODE)) {
             String server = Prefs.getString(PrefKeys.OFFLINE_SERVER);
-
             if (server == null) {
                 ToastUtil.toast("LOCAL SERVER CAN NOT BE NULL");
                 return SERVER_BASE_URI;
             }
-
             return LOCAL_BASE_URI.replace("?", server);
         }
-
         return SERVER_BASE_URI;
     }
 

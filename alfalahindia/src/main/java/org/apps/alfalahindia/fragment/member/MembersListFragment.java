@@ -49,6 +49,7 @@ public class MembersListFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_members_list, container, false);
         membersListview = (ListView) view.findViewById(R.id.membersListview);
         emptyListview = (TextView) view.findViewById(R.id.emptyElement);
@@ -131,8 +132,6 @@ public class MembersListFragment extends BaseFragment {
                 new MemberListAdapter.onSelectedEventCalender() {
                 }
         );
-
-        // MemberAdapter adapter = new MemberAdapter(getActivity(), R.layout.item_member, members);
         membersListview.setAdapter(adapter);
         membersListview.setEmptyView(emptyListview);
         membersListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -140,15 +139,13 @@ public class MembersListFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 System.out.println(membersListview.getItemAtPosition(position).getClass());
-
-
             }
         });
 
         membersListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if(!MemberUtil.isAdmin()){
+                if (!MemberUtil.isAdmin()) {
                     return false;
                 }
                 Member member = members.get(position);
